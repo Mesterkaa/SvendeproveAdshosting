@@ -16,13 +16,13 @@ class Server {
 
         this.app = express();
         this.config();
-        this.mongo();
+        // this.mongo();
         this.routes();
     }
 
     private routes(): void{
 
-        this.app.use(express.static(__dirname + "/../app-mesterkaa-dk"))
+        this.app.use(express.static(__dirname + "/../spa-ads-web-application"))
     }
     private config(): void {
         this.app.use(cors());
