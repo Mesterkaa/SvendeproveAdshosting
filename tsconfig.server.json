@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/server-mesterkaa-dk",
+    "outDir": "./dist/api-ads-web-application",
     "module": "commonjs"
   },
   "include": [
