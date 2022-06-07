@@ -16,7 +16,7 @@ class Server {
 
         this.app = express();
         this.config();
-        // this.mongo();
+        this.mongo();
         this.routes();
     }
 

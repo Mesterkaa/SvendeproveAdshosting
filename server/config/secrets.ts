@@ -4,12 +4,12 @@ dotenv.config();
 
 export const MONGODB_URI = process.env["MONGODB_URI"];
 
-/*
+
 if (!MONGODB_URI) {
     logger.error("No mongo connection string. Set MONGODB_URI environment variable.");
     process.exit(1);
 }
-*/
+
 
 export const PORT = Number(process.env["PORT"]);
 
