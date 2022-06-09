@@ -11,6 +11,9 @@ import { ServersComponent } from './pages/customer/servers/servers.component';
 import { LoginComponent } from './pages/login/login.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 
+import { MsalGuard } from '@azure/msal-angular';
+import { RoleGuard } from './guards/role.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -22,6 +25,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
+    canActivate: [MsalGuard],
     children: [
       {
         path: '',
@@ -43,6 +47,10 @@ const routes: Routes = [
   },
   {
     path: 'admin',
+    canActivate: [MsalGuard, RoleGuard],
+    data: {
+      roles: [ 'Admin' ]
+    },
     children: [
       {
         path: '',
@@ -65,8 +73,12 @@ const routes: Routes = [
 
 ];
 
+const isIframe = window !== window.parent && !window.opener;
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    initialNavigation: !isIframe ? 'enabledBlocking' : 'disabled' // Don't perform initial navigation in iframes
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
