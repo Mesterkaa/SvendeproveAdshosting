@@ -23,6 +23,9 @@ class Server {
     private routes(): void{
 
         this.app.use(express.static(__dirname + "/../spa-ads-web-application"))
+        this.app.get("/api/hello", (req, res) => {
+          res.send({text: "HELLO"});
+        })
     }
     private config(): void {
         this.app.use(cors());

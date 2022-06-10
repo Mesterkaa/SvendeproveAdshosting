@@ -22,6 +22,7 @@ import { LoginComponent } from './pages/login/login.component';
 
 import { MsalModule, MsalGuard, MsalInterceptor } from '@azure/msal-angular'; // Import MsalInterceptor
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
+import { ApiInterceptor } from './interceptor/api.interceptor';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -66,7 +67,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
   }, {
     interactionType: InteractionType.Redirect, // MSAL Interceptor Configuration
     protectedResourceMap: new Map([
-        ['https://graph.microsoft.com/v1.0/me', ['user.read']]
+        ['https://graph.microsoft.com/v1.0/me', ['user.read']],
+        ['/api', ['user.read']]
     ])
   })
   ],
@@ -76,6 +78,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       useClass: MsalInterceptor,
       multi: true
     },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     MsalGuard
   ],
   bootstrap: [AppComponent]
