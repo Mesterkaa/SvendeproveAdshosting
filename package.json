@@ -29,6 +29,7 @@
     "mongoose": "^6.3.5",
     "msal": "^1.4.16",
     "node": "^16.14.2",
+    "passport": "^0.6.0",
     "passport-azure-ad": "^4.3.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
