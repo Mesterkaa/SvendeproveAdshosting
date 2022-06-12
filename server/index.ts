@@ -16,15 +16,21 @@ class Server {
 
         this.app = express();
         this.config();
-        this.mongo();
+        //this.mongo();
         this.routes();
     }
 
     private routes(): void{
 
         this.app.use(express.static(__dirname + "/../spa-ads-web-application"))
-        this.app.get("/api/hello", (req, res) => {
-          res.send({text: "HELLO"});
+        this.app.get("/api/public", (req, res) => {
+          res.send({text: "PUBLIC"});
+        })
+        this.app.get("/api/secure", (req, res) => {
+          res.send({text: "SECURE"});
+        })
+        this.app.get("/api/admin", (req, res) => {
+          res.send({text: "ADMIN"});
         })
     }
     private config(): void {

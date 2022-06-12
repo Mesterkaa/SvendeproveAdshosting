@@ -23,9 +23,6 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this.getProfile();
-    this.http.get("/api/hello").subscribe(e => {
-      console.log(e);
-    })
   }
 
   getProfile() {
