@@ -19,11 +19,12 @@ export class RoleGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const userRoles = this.msalService.instance.getAccountByLocalId(this.id)?.idTokenClaims?.roles; //This needs to changed to where the Account is pulled based on Local Id
-    if (userRoles == undefined) return false;
-    const allowedRoles = next.data["roles"];
-    const matchingRoles = userRoles.filter(x => allowedRoles.includes(x));
-    return matchingRoles.length > 0;
+    const groups = this.msalService.instance.getAccountByLocalId(this.id)?.idTokenClaims?.groups as string[]; //This needs to changed to where the Account is pulled based on Local Id
+    console.log(groups)
+    if (groups == undefined) return false;
+    const allowedGroups = next.data["groups"];
+    const matchingGroups = groups.filter(x => allowedGroups.includes(x));
+    return matchingGroups.length > 0;
 
   }
 

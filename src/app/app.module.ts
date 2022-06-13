@@ -51,7 +51,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     HttpClientModule,
     MsalModule.forRoot( new PublicClientApplication({
       auth: {
-        clientId: '47ad7db1-f067-4ba4-864c-edd1a5e73fd7',
+        clientId: 'b57cc2a2-44cd-4495-85f3-2210a29e7217',
         authority: 'https://login.microsoftonline.com/806ab42c-cd67-45a5-80ca-af7e90cfa6e7',
         redirectUri: 'http://localhost:4200'
       },
@@ -65,12 +65,11 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
         scopes: ['user.read']
       }
   }, {
-    interactionType: InteractionType.Redirect, // MSAL Interceptor Configuration
+    interactionType: InteractionType.Popup, // MSAL Interceptor Configuration
     protectedResourceMap: new Map([
         ['https://graph.microsoft.com/v1.0/me', ['user.read']],
-        ['/api/public', null],
-        ['/api/secure', ['openid']],
-        ['/api/admin', ['openid']]
+        ['/api/secure', ['api://11e002eb-233a-44f0-82d0-3dd0682bd4f5/access_as_user']],
+        ['/api/admin', ['api://11e002eb-233a-44f0-82d0-3dd0682bd4f5/access_as_admin']]
     ])
   })
   ],
