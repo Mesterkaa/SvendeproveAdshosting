@@ -65,12 +65,11 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
         scopes: ['user.read']
       }
   }, {
-    interactionType: InteractionType.Redirect, // MSAL Interceptor Configuration
+    interactionType: InteractionType.Popup, // MSAL Interceptor Configuration
     protectedResourceMap: new Map([
         ['https://graph.microsoft.com/v1.0/me', ['user.read']],
-        ['/api/public', null],
-        ['/api/secure', ['openid']],
-        ['/api/admin', ['openid']]
+        ['/api/secure', ['***REMOVED***']],
+        ['/api/admin', ['***REMOVED***']]
     ])
   })
   ],

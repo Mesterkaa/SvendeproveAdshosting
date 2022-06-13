@@ -49,7 +49,7 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [MsalGuard, RoleGuard],
     data: {
-      roles: [ 'Admin' ]
+      groups: [ '***REMOVED***' ]
     },
     children: [
       {
