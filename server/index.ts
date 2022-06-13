@@ -29,10 +29,10 @@ class Server {
         this.app.get("/api/public", (req, res) => {
           res.send({text: "PUBLIC"});
         })
-        this.app.get("/api/secure", passport.authenticate('oauth-bearer', {session: false, scope: "access_as_user"}), (req, res) => {
+        this.app.get("/api/secure", passport.authenticate('user_access', {session: false}), (req, res) => {
           res.send({text: "SECURE"});
         })
-        this.app.get("/api/admin", passport.authenticate('oauth-bearer', {session: false, scope: "access_as_admin"}), (req, res) => {
+        this.app.get("/api/admin", passport.authenticate('admin_access', {session: false}), (req, res) => {
           res.send({text: "ADMIN"});
         })
     }
@@ -50,14 +50,25 @@ class Server {
           validateIssuer: AzureConfig.settings.validateIssuer,
           passReqToCallback: AzureConfig.settings.passReqToCallback,
           loggingLevel: AzureConfig.settings.loggingLevel as "error" | "info" | "warn" | undefined,
-          scope: AzureConfig.resource.scope
+          scope: AzureConfig.resource.scope,
         };
-        const bearerStrategy = new BearerStrategy(options, (token, done: any) => {
-          // Send user info using the second argument
+        const userBearerStrategy = new BearerStrategy(options, (token: any, done: any) => {
+          done(null, token);
+        });
+        const adminBearerStrategy = new BearerStrategy(options, (token: any, done: any) => {
+          console.log("option", options)
+          console.log("token", token)
+          const groups: string[] = token.groups;
+          console.log("groups", groups)
+          if (groups == undefined || groups.length == 0) return done(null, false);
+          const matchingGroups = groups.filter(x => AzureConfig.adminGroups.includes(x));
+          console.log("matchingGroups", matchingGroups)
+          if (matchingGroups.length == 0) return done(null, false)
           done(null, token);
         });
         this.app.use(passport.initialize());
-        passport.use(bearerStrategy);
+        passport.use('user_access', userBearerStrategy);
+        passport.use('admin_access', adminBearerStrategy);
     }
     private mongo(): void {
         const connection = mongoose.connection;
