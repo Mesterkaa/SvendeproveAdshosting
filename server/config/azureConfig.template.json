@@ -1,11 +1,11 @@
 {
   "credentials": {
-      "tenantID": "***REMOVED***",
-      "clientID": "***REMOVED***",
-      "audience": "***REMOVED***"
+      "tenantID": "",
+      "clientID": "",
+      "audience": ""
   },
   "resource": {
-      "scope": ["access_as_user", "access_as_admin"]
+      "scope": []
   },
   "metadata": {
       "authority": "login.microsoftonline.com",
@@ -17,5 +17,5 @@
       "passReqToCallback": false,
       "loggingLevel": "info"
   },
-  "adminGroups": ["***REMOVED***"]
+  "adminGroups": [""]
 }

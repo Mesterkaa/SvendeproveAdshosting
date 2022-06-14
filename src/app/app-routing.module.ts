@@ -12,7 +12,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 
 import { MsalGuard } from '@azure/msal-angular';
-import { RoleGuard } from './guards/role.guard';
+import { AdminGuard } from './guards/role.guard';
 
 const routes: Routes = [
   {
@@ -47,10 +47,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    canActivate: [MsalGuard, RoleGuard],
-    data: {
-      groups: [ '***REMOVED***' ]
-    },
+    canActivate: [MsalGuard, AdminGuard],
     children: [
       {
         path: '',
