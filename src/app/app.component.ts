@@ -3,6 +3,8 @@ import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfigur
 import { InteractionStatus, PopupRequest } from '@azure/msal-browser';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { UserInfo } from './models/user-info';
 import { UserService } from './services/user.service';
 
 @Component({
@@ -14,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'Ads-Web-Applikation';
   isIframe = false;
   loginDisplay = false;
-  name = "";
+  user: UserInfo
   private readonly _destroying$ = new Subject<void>();
 
   constructor(@Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration, private broadcastService: MsalBroadcastService, private authService: MsalService, private userService: UserService) { }
@@ -24,7 +26,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.broadcastService.inProgress$
     .pipe(
-      filter((status: InteractionStatus) => status === InteractionStatus.None),
       takeUntil(this._destroying$)
     )
     .subscribe(() => {
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userService.user
     .pipe(takeUntil(this._destroying$))
     .subscribe((e) => {
-      this.name = e[0] ? e[0] : "";
+      this.user = e;
     })
   }
 
@@ -42,8 +43,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authService.loginPopup(this.msalGuardConfig.authRequest ? {...this.msalGuardConfig.authRequest} as PopupRequest : undefined)
         .subscribe({
           next: (result) => {
-            console.log(result);
-            this.userService.updateLogin(result.account?.name, result.account?.localAccountId);
             this.setLoginDisplay();
           },
           error: (error) => console.log(error)
@@ -54,12 +53,26 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authService.logoutPopup({
       mainWindowRedirectUri: "/"
     }).toPromise().then( () => {
-      this.userService.updateLogin(undefined,undefined);
+      this.setLoginDisplay();
     });
   }
 
   setLoginDisplay() {
-    this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
+    if (this.authService.instance.getAllAccounts().length > 0) {
+      const user = this.authService.instance.getAllAccounts()[0];
+      const userGroups: string[] = (user.idTokenClaims as any).groups;
+      const matchingGroups = userGroups.filter(x => environment.adminGroups.includes(x));
+      this.userService.updateLogin(
+        {
+          userName: user.name,
+          id: user.localAccountId,
+          type: matchingGroups.length > 0 ? 'admin' : 'user'
+        });
+      this.loginDisplay = true;
+    } else {
+      this.userService.updateLogin({userName: undefined, id: undefined, type: undefined});
+      this.loginDisplay = false;
+    }
   }
 
   ngOnDestroy(): void {

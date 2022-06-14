@@ -2,9 +2,21 @@
   <a class="title" href="/">{{ title }}</a>
 
   <div class="toolbar-spacer"></div>
-  <p>{{name}}</p>
-  <a mat-button [routerLink]="['dashboard/account']">Profile</a>
-  <a mat-button [routerLink]="['admin']">Admin</a>
+  <p>{{user.userName}}</p>
+  <div *ngIf="user.type == 'user'">
+    <a mat-button [routerLink]="['dashboard']">Dashboard</a>
+    <a mat-button [routerLink]="['dashboard/buy']">Buy</a>
+    <a mat-button [routerLink]="['dashboard/repo']">Repos</a>
+    <a mat-button [routerLink]="['dashboard/account']">Account</a>
+  </div>
+  <div *ngIf="user.type == 'admin'">
+    <a mat-button [routerLink]="['admin']">Usage</a>
+    <a mat-button [routerLink]="['admin/companies']">Companies</a>
+    <a mat-button [routerLink]="['admin/products']">Products</a>
+    <a mat-button [routerLink]="['admin/licenses']">Licenses</a>
+    <a mat-button [routerLink]="['dashboard/account']">Account</a>
+  </div>
+
 
   <button mat-raised-button *ngIf="!loginDisplay" (click)="login()">Login</button>
   <button mat-raised-button *ngIf="loginDisplay" (click)="logout()">Logout</button>

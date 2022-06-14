@@ -8,7 +8,6 @@ import { AccountComponent } from './pages/customer/account/account.component';
 import { BuyComponent } from './pages/customer/buy/buy.component';
 import { RepoComponent } from './pages/customer/repo/repo.component';
 import { ServersComponent } from './pages/customer/servers/servers.component';
-import { LoginComponent } from './pages/login/login.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 
 import { MsalGuard } from '@azure/msal-angular';
@@ -18,10 +17,6 @@ const routes: Routes = [
   {
     path: '',
     component: WelcomeComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
   },
   {
     path: 'dashboard',

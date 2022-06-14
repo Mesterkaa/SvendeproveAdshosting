@@ -18,7 +18,6 @@ import { ServersComponent } from './pages/customer/servers/servers.component';
 import { AccountComponent } from './pages/customer/account/account.component';
 import { BuyComponent } from './pages/customer/buy/buy.component';
 import { RepoComponent } from './pages/customer/repo/repo.component';
-import { LoginComponent } from './pages/login/login.component';
 
 import { MsalModule, MsalGuard, MsalInterceptor } from '@azure/msal-angular'; // Import MsalInterceptor
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
@@ -39,8 +38,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     ServersComponent,
     AccountComponent,
     BuyComponent,
-    RepoComponent,
-    LoginComponent
+    RepoComponent
   ],
   imports: [
     BrowserModule,
