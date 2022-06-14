@@ -13,7 +13,7 @@ import { UserService } from './services/user.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'Ads-Web-Applikation';
+  title = 'ADS HOSTING';
   isIframe = false;
   loginDisplay = false;
   user: UserInfo
