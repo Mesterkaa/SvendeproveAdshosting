@@ -23,6 +23,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { MsalModule, MsalGuard, MsalInterceptor } from '@azure/msal-angular'; // Import MsalInterceptor
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
 import { ApiInterceptor } from './interceptor/api.interceptor';
+import { environment } from 'src/environments/environment';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -51,9 +52,9 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     HttpClientModule,
     MsalModule.forRoot( new PublicClientApplication({
       auth: {
-        clientId: '***REMOVED***',
-        authority: '***REMOVED***',
-        redirectUri: '***REMOVED***'
+        clientId: environment.clientId,
+        authority: environment.authority,
+        redirectUri: environment.redirectUri
       },
       cache: {
         cacheLocation: 'localStorage',
@@ -66,11 +67,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       }
   }, {
     interactionType: InteractionType.Popup, // MSAL Interceptor Configuration
-    protectedResourceMap: new Map([
-        ['https://graph.microsoft.com/v1.0/me', ['user.read']],
-        ['/api/secure', ['***REMOVED***']],
-        ['/api/admin', ['***REMOVED***']]
-    ])
+    protectedResourceMap: new Map(environment.protectedResourceMap)
   })
   ],
   providers: [
