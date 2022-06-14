@@ -23,6 +23,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { MsalModule, MsalGuard, MsalInterceptor } from '@azure/msal-angular'; // Import MsalInterceptor
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
 import { ApiInterceptor } from './interceptor/api.interceptor';
+import { environment } from 'src/environments/environment';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -51,9 +52,9 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     HttpClientModule,
     MsalModule.forRoot( new PublicClientApplication({
       auth: {
-        clientId: 'b57cc2a2-44cd-4495-85f3-2210a29e7217',
-        authority: 'https://login.microsoftonline.com/806ab42c-cd67-45a5-80ca-af7e90cfa6e7',
-        redirectUri: 'http://localhost:4200'
+        clientId: environment.clientId,
+        authority: environment.authority,
+        redirectUri: environment.redirectUri
       },
       cache: {
         cacheLocation: 'localStorage',
@@ -66,11 +67,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       }
   }, {
     interactionType: InteractionType.Popup, // MSAL Interceptor Configuration
-    protectedResourceMap: new Map([
-        ['https://graph.microsoft.com/v1.0/me', ['user.read']],
-        ['/api/secure', ['api://11e002eb-233a-44f0-82d0-3dd0682bd4f5/access_as_user']],
-        ['/api/admin', ['api://11e002eb-233a-44f0-82d0-3dd0682bd4f5/access_as_admin']]
-    ])
+    protectedResourceMap: new Map(environment.protectedResourceMap)
   })
   ],
   providers: [
