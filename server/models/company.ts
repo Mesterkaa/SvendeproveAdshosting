@@ -8,6 +8,7 @@ export interface ICompany extends Document {
 
 export const companySchema: Schema = new Schema({
   Name: {type: String, required: true, trim: true},
+  GroupId: {type: String, required: true, trim: true},
 });
 
 export const Company: Model<ICompany> = model<ICompany>("Company", companySchema);

@@ -1,14 +1,9 @@
-import { ProductController } from "../controllers/productController";
-import { CompanyController } from "../controllers/companyController";
 import { Routes } from "./Routes";
 
 /**
- * Defining subroutes for secure routes
+ * Defining subroutes for routes only accesable to logged in users
  */
 export class SecureRoutes extends Routes{
-  private productController: ProductController = new ProductController();
-  private companyController: CompanyController = new CompanyController();
-  private licenseController: CompanyController = new CompanyController();
 
    constructor(){
        super();
@@ -16,6 +11,5 @@ export class SecureRoutes extends Routes{
    }
    protected routes() {
         this.router.get("/get_products", this.productController.getProducts);
-        this.router.get("/get_companies", this.companyController.getCompanies);
     }
 }

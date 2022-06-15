@@ -1,11 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http"; // Import
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +18,7 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { UsageComponent } from './pages/admin/usage/usage.component';
 import { CompaniesListComponent } from './pages/admin/companies-list/companies-list.component';
 import { ProductsListComponent } from './pages/admin/products-list/products-list.component';
-import { LicensLisstComponent } from './pages/admin/licens-lisst/licens-lisst.component';
+import { LicenseListComponent } from './pages/admin/license-list/license-list.component';
 import { ServersComponent } from './pages/customer/servers/servers.component';
 import { AccountComponent } from './pages/customer/account/account.component';
 import { BuyComponent } from './pages/customer/buy/buy.component';
@@ -23,6 +28,7 @@ import { MsalModule, MsalGuard, MsalInterceptor } from '@azure/msal-angular'; //
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
 import { ApiInterceptor } from './interceptor/api.interceptor';
 import { environment } from 'src/environments/environment';
+import { EditDataDialogComponent } from './components/edit-data-dialog/edit-data-dialog.component';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -34,19 +40,27 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     UsageComponent,
     CompaniesListComponent,
     ProductsListComponent,
-    LicensLisstComponent,
+    LicenseListComponent,
     ServersComponent,
     AccountComponent,
     BuyComponent,
-    RepoComponent
+    RepoComponent,
+    EditDataDialogComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    FormsModule,
+
     MatButtonModule,
     MatToolbarModule,
     MatListModule,
+    MatTableModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+
     HttpClientModule,
     MsalModule.forRoot( new PublicClientApplication({
       auth: {

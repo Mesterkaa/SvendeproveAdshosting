@@ -5,7 +5,7 @@ export class CompanyService {
      * Gets all companies stored in the database.
      * @returns All companies.
      */
-    async getCompanies(): Promise<ICompany[]> {
+    async getAllCompanies(): Promise<ICompany[]> {
         return await Company.find({});
     }
 

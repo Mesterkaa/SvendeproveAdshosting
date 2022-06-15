@@ -5,7 +5,7 @@ export class CompanyController{
     companyService: CompanyService = new CompanyService();
 
     constructor() {
-      this.getCompanies = this.getCompanies.bind(this);
+      this.getAllCompanies = this.getAllCompanies.bind(this);
       this.createCompany = this.createCompany.bind(this);
     }
 
@@ -15,9 +15,9 @@ export class CompanyController{
      * @param res
      * @param next
      */
-    public async getCompanies(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async getAllCompanies(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const companies = await this.companyService.getCompanies();
+            const companies = await this.companyService.getAllCompanies();
             res.send(companies)
         } catch (error) {
             next(error);
@@ -30,9 +30,9 @@ export class CompanyController{
      * @param res
      * @param next
      */
-         public async createCompany({body: {company}}: Request, res: Response, next: NextFunction): Promise<void> {
+         public async createCompany({body}: Request, res: Response, next: NextFunction): Promise<void> {
           try {
-              const _company = await this.companyService.createCompany(company);
+              const _company = await this.companyService.createCompany(body);
               res.send(_company)
           } catch (error) {
               next(error);

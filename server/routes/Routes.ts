@@ -1,12 +1,20 @@
+import { ProductController } from "../controllers/productController";
+import { CompanyController } from "../controllers/companyController";
+import { LicenseController } from "../controllers/licenseController";
+
 import { Router } from "express";
 
 export abstract class Routes {
-    public router: Router;
+  protected productController: ProductController = new ProductController();
+  protected companyController: CompanyController = new CompanyController();
+  protected licenseController: LicenseController = new LicenseController();
 
-    constructor() {
-        this.router = Router();
+  public router: Router;
 
-    }
+  constructor() {
+      this.router = Router();
 
-    protected abstract routes(): void
+  }
+
+  protected abstract routes(): void
 }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CompaniesListComponent } from './pages/admin/companies-list/companies-list.component';
-import { LicensLisstComponent } from './pages/admin/licens-lisst/licens-lisst.component';
+import { LicenseListComponent } from './pages/admin/license-list/license-list.component';
 import { ProductsListComponent } from './pages/admin/products-list/products-list.component';
 import { UsageComponent } from './pages/admin/usage/usage.component';
 import { AccountComponent } from './pages/customer/account/account.component';
@@ -58,7 +58,7 @@ const routes: Routes = [
       },
       {
         path: 'licenses',
-        component: LicensLisstComponent
+        component: LicenseListComponent
       }
     ]
   }
