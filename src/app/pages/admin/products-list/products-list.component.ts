@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+  products: any;
 
   ngOnInit(): void {
+    this.http.get("/api/secure/get_products").subscribe(e => {
+      this.products = e;
+      console.log(e);
+    })
   }
 
 }

@@ -11,6 +11,9 @@ import * as mongoose from 'mongoose';
 import * as AzureConfig from './config/azureConfig.json'
 import {logger} from "./config/logger"
 import { MONGODB_URI, PORT } from "./config/secrets";
+import { PublicRoutes } from './routes/publicRoutes';
+import { SecureRoutes } from './routes/secureRoutes';
+import { AdminRoutes } from './routes/adminRoutes';
 
 class Server {
 
@@ -19,22 +22,27 @@ class Server {
     constructor() {
         this.app = express();
         this.config();
-        //this.mongo();
+        this.mongo();
         this.routes();
     }
 
     private routes(): void{
 
-        this.app.use(express.static(__dirname + "/../spa-ads-web-application"))
-        this.app.get("/api/public", (req, res) => {
-          res.send({text: "PUBLIC"});
-        })
-        this.app.get("/api/secure", passport.authenticate('user_access', {session: false}), (req, res) => {
-          res.send({text: "SECURE"});
-        })
-        this.app.get("/api/admin", passport.authenticate('admin_access', {session: false}), (req, res) => {
-          res.send({text: "ADMIN"});
-        })
+      this.app.use(express.static(__dirname + "/../spa-ads-web-application"))
+
+      this.app.use("/api", new PublicRoutes().router);
+      this.app.use("/api/secure", passport.authenticate('user_access', {session: false}), new SecureRoutes().router);
+      this.app.use("/api/admin", passport.authenticate('admin_access', {session: false}), new AdminRoutes().router);
+
+      this.app.get("/api/public", (req, res) => {
+        res.send({text: "PUBLIC"});
+      })
+      this.app.get("/api/secure", passport.authenticate('user_access', {session: false}), (req, res) => {
+        res.send({text: "SECURE"});
+      })
+      this.app.get("/api/admin", passport.authenticate('admin_access', {session: false}), (req, res) => {
+        res.send({text: "ADMIN"});
+      })
     }
     private config(): void {
         this.app.use(cors());
@@ -52,20 +60,19 @@ class Server {
           loggingLevel: AzureConfig.settings.loggingLevel as "error" | "info" | "warn" | undefined,
           scope: AzureConfig.resource.scope,
         };
-        const userBearerStrategy = new BearerStrategy(options, (token: any, done: any) => {
-          done(null, token);
+
+        const userBearerStrategy = new BearerStrategy(options, (req, token, done) => {
+          done(null, {}, token);
         });
-        const adminBearerStrategy = new BearerStrategy(options, (token: any, done: any) => {
-          console.log("option", options)
-          console.log("token", token)
-          const groups: string[] = token.groups;
-          console.log("groups", groups)
-          if (groups == undefined || groups.length == 0) return done(null, false);
+        const adminBearerStrategy = new BearerStrategy(options, (req, token, done) => {
+          const groups = token.groups;
+          if (groups == undefined || !Array.isArray(groups) ||groups.length == 0) return done(null, false);
           const matchingGroups = groups.filter(x => AzureConfig.adminGroups.includes(x));
           console.log("matchingGroups", matchingGroups)
           if (matchingGroups.length == 0) return done(null, false)
-          done(null, token);
+          done(null, {}, token);
         });
+
         this.app.use(passport.initialize());
         passport.use('user_access', userBearerStrategy);
         passport.use('admin_access', adminBearerStrategy);

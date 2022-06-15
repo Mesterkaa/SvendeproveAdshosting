@@ -14,7 +14,7 @@
   },
   "settings": {
       "validateIssuer": true,
-      "passReqToCallback": false,
+      "passReqToCallback": true,
       "loggingLevel": "info"
   },
   "adminGroups": [""]
