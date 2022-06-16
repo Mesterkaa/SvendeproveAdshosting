@@ -2,7 +2,6 @@
   <a class="title" href="/">{{ title }}</a>
 
   <div class="toolbar-spacer"></div>
-  <p>{{user.userName}}</p>
   <div *ngIf="user.type == 'user'">
     <a mat-button [routerLink]="['dashboard']">Dashboard</a>
     <a mat-button [routerLink]="['dashboard/buy']">Buy</a>
