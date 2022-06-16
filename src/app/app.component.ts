@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
 import { InteractionStatus, PopupRequest } from '@azure/msal-browser';
 import { Subject } from 'rxjs';
@@ -19,7 +20,13 @@ export class AppComponent implements OnInit, OnDestroy {
   user: UserInfo
   private readonly _destroying$ = new Subject<void>();
 
-  constructor(@Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration, private broadcastService: MsalBroadcastService, private authService: MsalService, private userService: UserService) { }
+  constructor(
+    @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
+    private broadcastService: MsalBroadcastService,
+    private authService: MsalService,
+    private userService: UserService,
+    private _router: Router
+  ) { }
 
   ngOnInit() {
     this.isIframe = window !== window.parent && !window.opener;
@@ -50,6 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   logout() { // Add log out function here
+    this._router.navigateByUrl("/");
     this.authService.logoutPopup({
       mainWindowRedirectUri: "/"
     }).toPromise().then( () => {

@@ -33,22 +33,12 @@ class Server {
       this.app.use("/api", new PublicRoutes().router);
       this.app.use("/api/secure", passport.authenticate('user_access', {session: false}), new SecureRoutes().router);
       this.app.use("/api/admin", passport.authenticate('admin_access', {session: false}), new AdminRoutes().router);
-
-      this.app.get("/api/public", (req, res) => {
-        res.send({text: "PUBLIC"});
-      })
-      this.app.get("/api/secure", passport.authenticate('user_access', {session: false}), (req, res) => {
-        res.send({text: "SECURE"});
-      })
-      this.app.get("/api/admin", passport.authenticate('admin_access', {session: false}), (req, res) => {
-        res.send({text: "ADMIN"});
-      })
     }
     private config(): void {
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: false}));
-        this.app.use(morgan('short'));
+        this.app.use(morgan('common'));
 
         const options: IBearerStrategyOptionWithRequest = {
           identityMetadata: `https://${AzureConfig.metadata.authority}/${AzureConfig.credentials.tenantID}/${AzureConfig.metadata.version}/${AzureConfig.metadata.discovery}`,

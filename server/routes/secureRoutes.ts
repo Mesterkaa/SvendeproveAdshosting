@@ -5,11 +5,13 @@ import { Routes } from "./Routes";
  */
 export class SecureRoutes extends Routes{
 
-   constructor(){
-       super();
-       this.routes();
-   }
-   protected routes() {
-        this.router.get("/get_products", this.productController.getProducts);
-    }
+  constructor(){
+    super();
+    this.routes();
+  }
+  protected routes() {
+    this.router.get("/get_products", this.productController.getProducts);
+    this.router.get("/get_company", this.companyController.getMyCompany);
+    this.router.get("/get_licenses", this.licenseController.getLicenses);
+  }
 }

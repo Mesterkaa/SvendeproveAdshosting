@@ -6,6 +6,7 @@ export class LicenseController{
 
   constructor() {
     this.getAllLicenses = this.getAllLicenses.bind(this);
+    this.getLicenses = this.getLicenses.bind(this);
   }
 
   /**
@@ -22,4 +23,20 @@ export class LicenseController{
           next(error);
       }
   }
+
+  /**
+   * Gets licenses beloning to the Users company stored in the db
+   * @param req
+   * @param res
+   * @param next
+   */
+   public async getLicenses(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const authInfo: any = req.authInfo;
+        const licenses = await this.licenseService.getLicenseByGroupId(authInfo.groups[0]);
+        res.send(licenses)
+    } catch (error) {
+        next(error);
+    }
+}
 }
