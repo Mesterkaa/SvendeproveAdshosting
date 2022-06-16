@@ -1,16 +1,19 @@
 //MAKE A COPY OF THIS FIL AND RENAME IT "environment.ts"
 
+import { Ienviroment } from "./environmentInterface";
+
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment: {production: boolean, clientId: string, authority: string, redirectUri: string, adminGroups: string[], protectedResourceMap: [string, string[]][]} = {
+export const environment: Ienviroment = {
   production: false,
   clientId: '',
   authority: '',
   redirectUri: '',
   adminGroups: [],
-  protectedResourceMap: [['',['']]]
+  protectedResourceMap: [['',['']]],
+  updateFreq: 500
 };
 
 /*

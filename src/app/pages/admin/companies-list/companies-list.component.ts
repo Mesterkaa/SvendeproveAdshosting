@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject, interval } from 'rxjs';
 import { CompanyService } from '../../../services/company.service';
 import { Company } from '../../../models/company';
-import { takeUntil } from 'rxjs/operators';
+import { startWith, takeUntil, switchMap } from 'rxjs/operators';
 import {  MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EditDataDialogComponent } from '../../../components/edit-data-dialog/edit-data-dialog.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   templateUrl: './companies-list.component.html',
@@ -18,18 +19,22 @@ export class CompaniesListComponent implements OnInit, OnDestroy {
   constructor(private companyService: CompanyService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.companyService.getAllCompanies()
-      .pipe(takeUntil(this._destroying$))
-      .subscribe(e => {
-        this.companies = e;
-      })
+    interval(environment.updateFreq)
+    .pipe(
+      startWith(0),
+      takeUntil(this._destroying$),
+      switchMap(() => this.companyService.getAllCompanies())
+    )
+    .subscribe(e => {
+      this.companies = e;
+    })
   }
 
   createCompany(): void {
     const dialogRef = this.dialog.open(EditDataDialogComponent, { width: '500px', data: {data: {Name: '', GroupId: ''}, labels: ['Company Name', 'Company GroupId'], title: 'Create Company'}});
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(async (result: Company) => {
       if (result) {
-        this.companyService.createCompany(result.Name, result.GroupId);
+        await this.companyService.createCompany(result);
       }
     })
   }

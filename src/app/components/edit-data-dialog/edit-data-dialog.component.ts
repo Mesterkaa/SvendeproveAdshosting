@@ -20,4 +20,15 @@ export class EditDataDialogComponent {
     this.dialogRef.close();
   }
 
+  inputType(key: string): string {
+    switch (typeof(this.data.data[key])) {
+      case "number":
+        return "number";
+      case "string":
+        return "text";
+      default:
+        return "text";
+    }
+  }
+
 }

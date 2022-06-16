@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { interval, Subject } from 'rxjs';
+import { takeUntil, startWith, switchMap } from 'rxjs/operators';
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../models/product';
 import { MatDialog } from '@angular/material/dialog';
 import { EditDataDialogComponent } from '../../../components/edit-data-dialog/edit-data-dialog.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   templateUrl: './products-list.component.html',
@@ -19,11 +20,15 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   constructor(private productService: ProductService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.productService.getProducts()
-    .pipe(takeUntil(this._destroying$))
-      .subscribe(e => {
-        this.products = e;
-      })
+    interval(environment.updateFreq)
+    .pipe(
+      startWith(0),
+      takeUntil(this._destroying$),
+      switchMap(() => this.productService.getProducts())
+    )
+    .subscribe(e => {
+      this.products = e;
+    })
   }
 
   createProduct(): void {
@@ -35,9 +40,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
           title: 'Create Product'
         }
       });
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(async (result: Product) => {
       if (result) {
-        this.productService.createProduct(result.Name, result.Description, result.Price, result.Specs)
+        this.productService.createProduct(result)
       }
     })
   }

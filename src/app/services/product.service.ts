@@ -14,7 +14,7 @@ export class ProductService {
     return this.http.get<Product[]>("/api/secure/get_products");
   }
 
-  createProduct(Name: string, Description: string, Price: number, Specs: any): Promise<Product> {
-    return this.http.post<Product>('/api/admin/create_product', { Name: Name, Description: Description, Price: Price, Specs: Specs}).toPromise<Product>()
+  createProduct(product: Product): Promise<Product> {
+    return this.http.post<Product>('/api/admin/create_product', {Product: product}).toPromise<Product>()
   }
 }

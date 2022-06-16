@@ -48,7 +48,7 @@ class Server {
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: false}));
-        this.app.use(morgan('dev'));
+        this.app.use(morgan('short'));
 
         const options: IBearerStrategyOptionWithRequest = {
           identityMetadata: `https://${AzureConfig.metadata.authority}/${AzureConfig.credentials.tenantID}/${AzureConfig.metadata.version}/${AzureConfig.metadata.discovery}`,

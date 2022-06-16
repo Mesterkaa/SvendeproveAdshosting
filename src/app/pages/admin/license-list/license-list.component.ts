@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { interval, Subject } from 'rxjs';
+import { takeUntil, startWith, switchMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { License } from '../../../models/license';
 import { LicenseService } from '../../../services/license.service';
 
@@ -16,11 +17,15 @@ export class LicenseListComponent implements OnInit, OnDestroy {
   constructor(private licenseService: LicenseService) { }
 
   ngOnInit(): void {
-    this.licenseService.getAllLicenses()
-      .pipe(takeUntil(this._destroying$))
-      .subscribe(e => {
-        this.licenses = e;
-      })
+    interval(environment.updateFreq)
+    .pipe(
+      startWith(0),
+      takeUntil(this._destroying$),
+      switchMap(() => this.licenseService.getAllLicenses())
+    )
+    .subscribe(e => {
+      this.licenses = e;
+    })
   }
 
   ngOnDestroy(): void {

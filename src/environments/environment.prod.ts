@@ -1,8 +1,11 @@
-export const environment: {production: boolean, clientId: string, authority: string, redirectUri: string, adminGroups: string[], protectedResourceMap: [string, string[]][]} = {
+import { Ienviroment } from "./environmentInterface";
+
+export const environment: Ienviroment = {
   production: false,
   clientId: '',
   authority: '',
   redirectUri: '',
   adminGroups: [],
-  protectedResourceMap: [['',['']]]
+  protectedResourceMap: [['',['']]],
+  updateFreq: 500
 }

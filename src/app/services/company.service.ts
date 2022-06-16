@@ -14,7 +14,7 @@ export class CompanyService {
     return this.http.get<Company[]>("/api/admin/get_all_companies");
   }
 
-  createCompany(Name: string, GroupId: string): Promise<Company> {
-    return this.http.post<Company>('/api/admin/create_company', { Name: Name, GroupId: GroupId}).toPromise<Company>()
+  createCompany(company: Company): Promise<Company> {
+    return this.http.post<Company>('/api/admin/create_company', {Company: company}).toPromise<Company>()
   }
 }

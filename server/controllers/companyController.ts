@@ -24,18 +24,18 @@ export class CompanyController{
         }
     }
 
-        /**
+     /**
      * Creates a company based on input
      * @param req
      * @param res
      * @param next
      */
-         public async createCompany({body}: Request, res: Response, next: NextFunction): Promise<void> {
-          try {
-              const _company = await this.companyService.createCompany(body);
-              res.send(_company)
-          } catch (error) {
-              next(error);
-          }
+    public async createCompany({body: {Company}}: Request, res: Response, next: NextFunction): Promise<void> {
+      try {
+        const _company = await this.companyService.createCompany(Company);
+        res.send(_company)
+      } catch (error) {
+        next(error);
       }
+    }
 }

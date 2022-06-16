@@ -30,9 +30,9 @@ export class ProductController{
      * @param res
      * @param next
      */
-         public async createProduct({body: {product}}: Request, res: Response, next: NextFunction): Promise<void> {
+         public async createProduct({body: {Product}}: Request, res: Response, next: NextFunction): Promise<void> {
           try {
-              const _product = await this.productService.createProduct(product);
+              const _product = await this.productService.createProduct(Product);
               res.send(_product)
           } catch (error) {
               next(error);
