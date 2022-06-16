@@ -47,4 +47,4 @@ Thumbs.db
 
 *.env
 /src/environments/environment.ts
-/server/config/azureConfig.json
+/server/config/config.json
