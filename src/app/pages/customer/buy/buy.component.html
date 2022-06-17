@@ -1,1 +1,51 @@
-<p>buy works!</p>
+<mat-stepper [linear]="true" #stepper>
+
+  <mat-step [completed]="selectedProduct != null">
+    <ng-template matStepLabel>Select Tier</ng-template>
+
+    <div class="card-container">
+      <mat-card class="product-card" *ngFor="let product of products" [ngStyle]="{ 'box-shadow': (product == selectedProduct) ? '5px 5px 10px white' : ''}">
+        <mat-card-title>{{product.Name}}</mat-card-title>
+        <mat-card-content>
+          <p>{{product.Description}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="selectProduct(product)">SELECT</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <button *ngIf="selectedProduct != null" mat-button matStepperNext>Next</button>
+  </mat-step>
+
+  <mat-step [stepControl]="formGroup">
+    <ng-template matStepLabel>Configure Settings</ng-template>
+    <form [formGroup]="formGroup">
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="NameCtrl" placeholder="Webserver"
+               required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Stage</mat-label>
+        <mat-select formControlName="StageCtrl" required>
+          <mat-option value="prod">Production</mat-option>
+          <mat-option value="test">Test</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step >
+    <ng-template matStepLabel>Confirm</ng-template>
+    <div class="confirm">
+      <button mat-raised-button (click)="confirm()">Buy new license</button>
+      <button mat-raised-button (click)="reset()">Cancel</button>
+    </div>
+  </mat-step>
+
+</mat-stepper>

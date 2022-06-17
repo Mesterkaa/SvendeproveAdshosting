@@ -17,21 +17,19 @@ export class CompanyController{
    * @param next
    */
   public async getAllCompanies(req: Request, res: Response, next: NextFunction): Promise<void> {
-      try {
-          const companies = await this.companyService.getAllCompanies();
-          res.send(companies)
-      } catch (error) {
-          next(error);
-      }
+    try {
+      const companies = await this.companyService.getAllCompanies();
+      res.send(companies)
+    } catch (error) {
+      next(error);
+    }
   }
 
   public async getMyCompany(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const authInfo: any = req.authInfo;
-      const company = await this.companyService.getCompanyByGroupId(authInfo.groups);
-      res.send(company)
+      res.send(req.user)
     } catch (error) {
-        next(error);
+      next(error);
     }
 }
 

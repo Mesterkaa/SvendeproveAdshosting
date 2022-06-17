@@ -13,9 +13,11 @@ import {logger} from "./config/logger"
 import { PublicRoutes } from './routes/publicRoutes';
 import { SecureRoutes } from './routes/secureRoutes';
 import { AdminRoutes } from './routes/adminRoutes';
+import { CompanyService } from "./services/companyService";
 
 class Server {
 
+  private companyService: CompanyService = new CompanyService();
   public app: express.Application;
 
   constructor() {
@@ -50,16 +52,18 @@ class Server {
       scope: azure.resource.scope,
     };
 
-    const userBearerStrategy = new BearerStrategy(options, (req, token, done) => {
-      done(null, {}, token);
+    const userBearerStrategy = new BearerStrategy(options, async (req, token, done) => {
+      const company = await this.companyService.getCompanyByGroupId(token.groups);
+      done(null, company, token);
     });
-    const adminBearerStrategy = new BearerStrategy(options, (req, token, done) => {
+    const adminBearerStrategy = new BearerStrategy(options, async (req, token, done) => {
       const groups = token.groups;
-      if (groups == undefined || !Array.isArray(groups) ||groups.length == 0) return done(null, false);
+      if (groups == undefined || !Array.isArray(groups) ||groups.length == 0) return done(null, {}, false);
       const matchingGroups = groups.filter(x => azure.adminGroups.includes(x));
       console.log("matchingGroups", matchingGroups)
-      if (matchingGroups.length == 0) return done(null, false)
-      done(null, {}, token);
+      if (matchingGroups.length == 0) return done(null, {}, false)
+      const company = await this.companyService.getCompanyByGroupId(token.groups);
+      done(null, company, token);
     });
 
     this.app.use(passport.initialize());

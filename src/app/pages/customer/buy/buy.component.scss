@@ -1,0 +1,30 @@
+.product-card {
+  margin: 10px;
+  width: 100%;
+  text-align: center;
+}
+.card-container {
+  display: flex;
+}
+
+mat-card {
+  background-color: #282828;
+}
+
+button {
+  color: white
+}
+
+form {
+  width: 100%;
+  mat-form-field {
+    width: 100%;
+    margin: 10px;
+  }
+}
+.confirm {
+  text-align: center;
+  button {
+    margin: 10px;
+  }
+}

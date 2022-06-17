@@ -6,6 +6,7 @@ export interface License {
   Product: Product;
   Company: Company;
   StartDate: Date;
+  Name: string;
   JobId: string;
 }
 
@@ -14,5 +15,6 @@ export interface NewLicense {
   Product: Product['_id'];
   Company: Company['_id'];
   StartDate: Date;
+  Name: string;
   JobId: string;
 }

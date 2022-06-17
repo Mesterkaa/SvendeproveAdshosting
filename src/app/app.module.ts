@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http"; // Import
 
 import { MatButtonModule } from '@angular/material/button';
@@ -11,6 +11,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -52,6 +56,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
 
     MatButtonModule,
     MatToolbarModule,
@@ -60,6 +65,10 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatStepperModule,
+    MatCardModule,
+    MatSelectModule,
+    MatSnackBarModule,
 
     HttpClientModule,
     MsalModule.forRoot( new PublicClientApplication({
