@@ -26,7 +26,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   company: Company
   private readonly _destroying$ = new Subject<void>();
   public licenses: License[] = []
-  public readonly displayedColumns: string[] = ['Product', 'StartDate', 'JobId'];
+  public readonly displayedColumns: string[] = ['Name', 'Product', 'StartDate'];
 
   constructor(
     private http: HttpClient,
@@ -40,7 +40,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     .pipe(
       startWith(0),
       takeUntil(this._destroying$),
-      switchMap(() => this.licenseService.getOwnedLicenses())
+      switchMap(() => this.licenseService.getOwnLicenses())
     )
     .subscribe(e => {
       this.licenses = e;

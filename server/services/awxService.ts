@@ -15,7 +15,7 @@ export class AwxService {
     return await this.axiosInstance
     .post(`https://awx.adshosting.lan/api/v2/workflow_job_templates/17/launch/`,
       { 'extra_vars': {
-      'company': company.Name,
+      'company': company.Name.toLocaleLowerCase(),
       'stage': stage,
       'tier': product.Name.toLocaleLowerCase(),
       'replicas': 2,
@@ -31,17 +31,11 @@ export class AwxService {
     })
   }
 
-  public async getLicenseStatus(_id: string): Promise<any> {
-    let license: ILicense | null = await License.findById(_id);
-    if (!license) return null;
-    return this.getJobStatus(license.JobId);
-  }
-
-  public async getJobStatus(jobId: string): Promise<any> {
+  public async getJobStatus(jobId: string): Promise<string> {
     return await this.axiosInstance
     .get(`https://awx.adshosting.lan/api/v2/workflow_jobs/${jobId}/`, {headers: { 'Authorization': `Bearer ${awx_token}`}})
     .then(res => {
-      return res;
+      return res.data["status"];
     })
     .catch(error => {
       throw error;

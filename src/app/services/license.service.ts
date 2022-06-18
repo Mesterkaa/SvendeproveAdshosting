@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { License } from '../models/license';
+import { License, LicenseStatus } from '../models/license';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,11 @@ export class LicenseService {
     return this.http.get<License[]>("/api/admin/get_all_licenses");
   }
 
-  getOwnedLicenses(): Observable<License[]> {
+  getOwnLicenses(): Observable<License[]> {
     return this.http.get<License[]>("/api/secure/get_licenses");
+  }
+
+  getOwnLicensesStatus(): Observable<LicenseStatus[]> {
+    return this.http.get<LicenseStatus[]>("/api/secure/get_licenses_status");
   }
 }

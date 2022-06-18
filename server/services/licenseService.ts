@@ -28,21 +28,29 @@ export class LicenseService {
       return await License.find({}).populate(['Product', 'Company']);
   }
 
-  /**
-   * Gets all licenses owned by a company via GroupId stored in the database.
-   * @returns All licenses.
-   */
-  async getLicenseByGroupId(Groups: ITokenPayload['groups']): Promise<ILicense[] | null> {
-    const company = await this.companyService.getCompanyByGroupId(Groups);
-    if (!company) return null;
-    return await this.getLicenseByCompanyId(company._id);
+
+  public async getLicenseStatus(_id: string): Promise<string | null> {
+    let license: ILicense | null = await License.findById(_id);
+    if (!license) return null;
+    return await this.awxService.getJobStatus(license.JobId);
+  }
+
+  public async getLicensesStatusByCompanyId(Id: string): Promise<{License: ILicense, Status: string | null}[] | null> {
+    const licenses = await this.getLicensesByCompanyId(Id);
+    if (!licenses) return null;
+    const statusMap = await Promise.all(licenses.map(async e => {
+      const status = await this.getLicenseStatus(e._id);
+      return {License: e, Status: status};
+    }))
+    return statusMap;
+
   }
 
   /**
    * Gets all licenses owned by a company via _id stored in the database.
    * @returns All licenses.
    */
-   async getLicenseByCompanyId(Id: string): Promise<ILicense[] | null> {
-    return await License.findById(Id).populate(['Product', 'Company']);
+   async getLicensesByCompanyId(Id: string): Promise<ILicense[] | null> {
+    return await License.find({Company: Id}).populate(['Product', 'Company']);
   }
 }

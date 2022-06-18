@@ -1,6 +1,11 @@
 import { Company } from "./company";
 import { Product } from "./product";
 
+
+export interface LicenseStatus {
+  License: License,
+  Status: any
+}
 export interface License {
   _id?: string
   Product: Product;

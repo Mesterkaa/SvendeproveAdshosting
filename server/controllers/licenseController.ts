@@ -9,6 +9,8 @@ export class LicenseController{
     this.createLicense = this.createLicense.bind(this);
     this.getAllLicenses = this.getAllLicenses.bind(this);
     this.getLicenses = this.getLicenses.bind(this);
+    this.getLicenseStatus = this.getLicenseStatus.bind(this);
+    this.getLicensesStatusByCompanyId = this.getLicensesStatusByCompanyId.bind(this);
   }
 
   /**
@@ -49,10 +51,41 @@ export class LicenseController{
    */
    public async getLicenses(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const licenses = await this.licenseService.getLicenseByCompanyId((req.user as ICompany)._id);
+      const licenses = await this.licenseService.getLicensesByCompanyId((req.user as ICompany)._id);
       res.send(licenses)
     } catch (error) {
       next(error);
     }
-}
+  }
+
+  /**
+   * Gets all status of a License.
+   * @param req
+   * @param res
+   * @param next
+   */
+   public async getLicenseStatus({params: {Id}}: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+        const status = await this.licenseService.getLicenseStatus(Id);
+        res.send(status)
+    } catch (error) {
+        next(error);
+    }
+   }
+
+    /**
+   * Gets all status of all owned Licenses.
+   * @param req
+   * @param res
+   * @param next
+   */
+     public async getLicensesStatusByCompanyId(req: Request, res: Response, next: NextFunction): Promise<void> {
+      try {
+          const status = await this.licenseService.getLicensesStatusByCompanyId((req.user as ICompany)._id);
+          res.send(status)
+      } catch (error) {
+          next(error);
+      }
+    }
+
 }
