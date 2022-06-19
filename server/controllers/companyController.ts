@@ -22,6 +22,12 @@ export class CompanyController{
     }
   }
 
+    /**
+   * Get company associated to the user based on input
+   * @param req
+   * @param res
+   * @param next
+   */
   public getMyCompany = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       res.send(req.user)

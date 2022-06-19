@@ -11,11 +11,11 @@ export class CompanyService {
   constructor(private http: HttpClient) { }
 
   getAllCompanies = (): Observable<Company[]> => {
-    return this.http.get<Company[]>("/api/admin/get_all_companies");
+    return this.http.get<Company[]>("/api/admin/all_companies");
   }
 
   getCompany = (): Observable<Company> => {
-    return this.http.get<Company>("/api/secure/get_company");
+    return this.http.get<Company>("/api/secure/company");
   }
 
   createCompany = (company: Company): Promise<Company> => {

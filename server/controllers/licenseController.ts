@@ -9,7 +9,7 @@ export class LicenseController{
   }
 
   /**
-     * Gets all licenses stored in the db
+     * Create new licenses and starts it's job
      * @param req
      * @param res
      * @param next
@@ -39,7 +39,7 @@ export class LicenseController{
   }
 
   /**
-   * Gets licenses beloning to the Users company stored in the db
+   * Gets all licenses beloning to the Users company stored in the db
    * @param req
    * @param res
    * @param next
@@ -54,33 +54,32 @@ export class LicenseController{
   }
 
   /**
-   * Gets all status of a License.
-   * @param req
-   * @param res
-   * @param next
-   */
-   public getLicenseStatus = async ({params: {Id}}: Request, res: Response, next: NextFunction): Promise<void> => {
+ * Gets all licenses and it's status beloning to the Users company stored in the db
+ * @param req
+ * @param res
+ * @param next
+ */
+  public getLicensesStatus = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const status = await this.licenseService.getLicenseStatus(Id);
+        const status = await this.licenseService.getLicensesStatusByCompanyId((req.user as ICompany)._id);
         res.send(status)
     } catch (error) {
         next(error);
     }
-   }
+  }
 
-    /**
-   * Gets all status of all owned Licenses.
-   * @param req
-   * @param res
-   * @param next
-   */
-     public getLicensesStatusByCompanyId = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-      try {
-          const status = await this.licenseService.getLicensesStatusByCompanyId((req.user as ICompany)._id);
-          res.send(status)
-      } catch (error) {
-          next(error);
-      }
+  /**
+ * Deletes a license and it's job
+ * @param req
+ * @param res
+ * @param next
+ */
+   public deleteLicense = async ({user, body: {Id}}: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const bool = await this.licenseService.deleteLicense((user as ICompany)._id, Id);
+        res.send(bool)
+    } catch (error) {
+        next(error);
     }
-
+  }
 }

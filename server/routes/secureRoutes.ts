@@ -10,11 +10,11 @@ export class SecureRoutes extends Routes{
     this.routes();
   }
   protected routes() {
-    this.router.get("/get_products", this.productController.getProducts);
-    this.router.get("/get_company", this.companyController.getMyCompany);
-    this.router.get("/get_licenses", this.licenseController.getLicenses);
-    this.router.get("/get_license_status", this.licenseController.getLicenseStatus);
-    this.router.get("/get_licenses_status", this.licenseController.getLicensesStatusByCompanyId)
+    this.router.get("/products", this.productController.getProducts);
+    this.router.get("/company", this.companyController.getMyCompany);
+    this.router.get("/licenses", this.licenseController.getLicenses);
+    this.router.get("/licenses_status", this.licenseController.getLicensesStatus)
     this.router.post("/create_license", this.licenseController.createLicense);
+    this.router.put("/delete_license", this.licenseController.deleteLicense);
   }
 }

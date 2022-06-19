@@ -22,20 +22,20 @@ export class ProductController{
         }
     }
 
-        /**
-     * Creates and product based on input
-     * @param req
-     * @param res
-     * @param next
-     */
-         public createProduct = async ({body: {Product}}: Request, res: Response, next: NextFunction): Promise<void> => {
-          try {
-              const _product = await this.productService.createProduct(Product);
-              res.send(_product)
-          } catch (error) {
-              next(error);
-          }
-      }
+      /**
+   * Creates a product based on input
+   * @param req
+   * @param res
+   * @param next
+   */
+  public createProduct = async ({body: {Product}}: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const _product = await this.productService.createProduct(Product);
+        res.send(_product)
+    } catch (error) {
+        next(error);
+    }
+  }
 
   /**
    * Updates a product based on input

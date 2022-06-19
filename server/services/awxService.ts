@@ -11,6 +11,13 @@ export class AwxService {
       rejectUnauthorized: false
     })
   })
+
+  /**
+   * Launch a new job
+   * @param stage name of the wanted stage
+   * @param product product of which the job is based on
+   * @param company company of the job owner
+   */
   public async launchJob(stage: string, product: IProduct, company: ICompany): Promise<string> {
     return await this.axiosInstance
     .post(`https://awx.adshosting.lan/api/v2/workflow_job_templates/17/launch/`,
@@ -31,6 +38,10 @@ export class AwxService {
     })
   }
 
+  /**
+   * Get status of a job
+   * @param jobId Id of the wanted job
+   */
   public async getJobStatus(jobId: string): Promise<string> {
     return await this.axiosInstance
     .get(`https://awx.adshosting.lan/api/v2/workflow_jobs/${jobId}/`, {headers: { 'Authorization': `Bearer ${awx_token}`}})
@@ -40,6 +51,21 @@ export class AwxService {
     .catch(error => {
       throw error;
     })
+  }
+
+  /**
+   * Delete job
+   * @param jobId Id of the wanted job
+   */
+   public async deleteJob(jobId: string): Promise<void> {
+    /*return await this.axiosInstance
+    .get(`https://awx.adshosting.lan/api/v2/workflow_jobs/${jobId}/`, {headers: { 'Authorization': `Bearer ${awx_token}`}})
+    .then(res => {
+      return res.data["status"];
+    })
+    .catch(error => {
+      throw error;
+    })*/
   }
 
 }

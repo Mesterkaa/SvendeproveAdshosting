@@ -1,6 +1,7 @@
 import { Document, Schema, Model, model, Error } from "mongoose";
 import { IProduct } from "./product";
 import { ICompany } from "./company";
+import { AwxService } from "../services/awxService";
 
 
 export interface ILicense extends Document {
@@ -18,5 +19,11 @@ export const licenseSchema: Schema = new Schema({
   Name: {type: String, required: true},
   JobId: {type: String, required: true},
 });
+
+licenseSchema.pre<ILicense>("deleteOne", async function save(next) {
+  const awxService: AwxService = new AwxService();
+  awxService.deleteJob(this.JobId);
+  next();
+})
 
 export const License: Model<ILicense> = model<ILicense>("License", licenseSchema);

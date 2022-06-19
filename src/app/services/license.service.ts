@@ -15,18 +15,18 @@ export class LicenseService {
   }
 
   getAllLicenses = (): Observable<License[]> => {
-    return this.http.get<License[]>("/api/admin/get_all_licenses");
+    return this.http.get<License[]>("/api/admin/all_licenses");
   }
 
   getOwnLicenses = (): Observable<License[]> => {
-    return this.http.get<License[]>("/api/secure/get_licenses");
+    return this.http.get<License[]>("/api/secure/licenses");
   }
 
   getOwnLicensesStatus = (): Observable<LicenseStatus[]> => {
-    return this.http.get<LicenseStatus[]>("/api/secure/get_licenses_status");
+    return this.http.get<LicenseStatus[]>("/api/secure/licenses_status");
   }
 
   deleteLicense = (license: License): Observable<boolean> => {
-    return this.http.put<boolean>("/api/secure/delete", {Id: license._id});
+    return this.http.put<boolean>("/api/secure/delete_license", {Id: license._id});
   }
 }

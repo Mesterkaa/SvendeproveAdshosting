@@ -42,6 +42,9 @@ export class ServersComponent implements OnInit, OnDestroy {
       });
     dialogRef.afterClosed().subscribe(async (result: boolean) => {
       if (result) {
+        this.licenseService.deleteLicense(licenseStatus.License).subscribe(e => {
+          console.log(e);
+        });
         console.warn("NOT IMPLEMENTED")
       }
     })

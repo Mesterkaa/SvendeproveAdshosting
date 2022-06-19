@@ -29,14 +29,14 @@ export class CompanyService {
     }
 
   /**
-   * Creates a Companies.
+   * Creates a Company.
    * @returns A single document containing the created Company.
    */
   async createCompany({Name, GroupId, GrafanaUrl}: {Name: string, GroupId: string, GrafanaUrl: string}): Promise<ICompany> {
     return await Company.create({Name: Name, GroupId: GroupId, GrafanaUrl: GrafanaUrl});
   }
   /**
-   * Updates a Companies.
+   * Updates a Company.
    * @returns A single document containing the updated Company.
    */
    async updateCompany(company: ICompany): Promise<ICompany | null> {

@@ -12,7 +12,7 @@ export class ProductService {
   }
 
   getProducts = (): Observable<Product[]> => {
-    return this.http.get<Product[]>("/api/secure/get_products");
+    return this.http.get<Product[]>("/api/secure/products");
   }
 
   createProduct = (product: Product): Promise<Product> => {
