@@ -47,6 +47,21 @@ export class ServersComponent implements OnInit, OnDestroy {
     })
   }
 
+  upperCase(str: string): string {
+    return str.charAt(0).toLocaleUpperCase() + str.slice(1);
+  }
+
+  statusClass(status: string): string {
+    switch (status) {
+      case "running":
+        return "running";
+      case "successful":
+        return "success";
+      default:
+        return "failed";
+    }
+  }
+
   ngOnDestroy(): void {
     this._destroying$.next(undefined);
     this._destroying$.complete();

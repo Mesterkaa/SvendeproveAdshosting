@@ -2,3 +2,21 @@ table {
   width: 100%;
   margin-top: 10px;
 }
+.dot {
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.success {
+  background-color: #198038;
+}
+
+.running {
+  background-color: #f1c21b;
+}
+
+.failed {
+  background-color: #da1e28;
+}
