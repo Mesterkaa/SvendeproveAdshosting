@@ -5,6 +5,7 @@
   <p><strong>Company: </strong> {{company?.Name}}</p>
 </div>
 
+<button mat-raised-button (click)="goToGrafana()">Go to Grafana dashboard</button>
 <table mat-table [dataSource]="licenses" class="mat-elevation-z8">
 
   <ng-container matColumnDef="Name">

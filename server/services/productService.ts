@@ -16,4 +16,12 @@ export class ProductService {
       async createProduct({Name, Description, Price, Specs}: {Name: string, Description: string, Price: number, Specs: any}): Promise<IProduct> {
         return await Product.create({Name: Name, Description: Description, Price: Price, Specs: Specs});
     }
+
+    /**
+     * Updates a product.
+     * @returns A single document containing the updated product.
+     */
+     async updateProduct(product: IProduct): Promise<IProduct | null> {
+      return await Product.findByIdAndUpdate(product._id, product);
+  }
 }

@@ -10,23 +10,23 @@ export class LicenseService {
 
   constructor(private http: HttpClient) { }
 
-  createLicense(productId: string, stage: string, name: string): Observable<License> {
+  createLicense = (productId: string, stage: string, name: string): Observable<License> => {
     return this.http.post<License>("/api/secure/create_license", {productId: productId, stage: stage, name: name})
   }
 
-  getAllLicenses(): Observable<License[]> {
+  getAllLicenses = (): Observable<License[]> => {
     return this.http.get<License[]>("/api/admin/get_all_licenses");
   }
 
-  getOwnLicenses(): Observable<License[]> {
+  getOwnLicenses = (): Observable<License[]> => {
     return this.http.get<License[]>("/api/secure/get_licenses");
   }
 
-  getOwnLicensesStatus(): Observable<LicenseStatus[]> {
+  getOwnLicensesStatus = (): Observable<LicenseStatus[]> => {
     return this.http.get<LicenseStatus[]>("/api/secure/get_licenses_status");
   }
 
-  deleteLicense(license: License): Observable<boolean> {
+  deleteLicense = (license: License): Observable<boolean> => {
     return this.http.put<boolean>("/api/secure/delete", {Id: license._id});
   }
 }

@@ -10,9 +10,9 @@ export class EditDataDialogComponent {
   dataKeys: string[];
   constructor(
     public dialogRef: MatDialogRef<EditDataDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { data: any, title: string}
+    @Inject(MAT_DIALOG_DATA) public data: { data: any, title: string, confirm: string}
   ) {
-    this.dataKeys = Object.keys(data.data)
+    this.dataKeys = Object.keys(data.data);
   }
 
   onNoClick(): void {

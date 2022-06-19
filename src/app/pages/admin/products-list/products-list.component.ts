@@ -16,7 +16,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   private readonly _destroying$ = new Subject<void>();
   public products: Product[] = []
-  public readonly displayedColumns: string[] = ['Id', 'Name', 'Description', 'Price', 'Specs'];
+  public readonly displayedColumns: string[] = ['Id', 'Name', 'Description', 'Price', 'Specs', 'Edit'];
   constructor(private productService: ProductService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -32,17 +32,31 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   createProduct(): void {
-    const dialogRef = this.dialog.open(EditDataDialogComponent,
-      {
-        width: '500px',
-        data: {
-          data: {Name: '', Description: '', Price: 0, Specs: ''},
-          title: 'Create Product'
-        }
-      });
+    this.openDialog(this.productService.createProduct);
+
+  }
+
+  updateProduct(product: Product): void {
+    this.openDialog(this.productService.updateProduct, product)
+  }
+
+  openDialog(callBack: (product: Product) => Promise<any>, product?: Product) {
+    let data = {Name: '', Description: '', Price: 0, Specs: ''};
+    let title = 'Create Product';
+    let confirm = 'Create';
+    if (product) {
+      data.Name = product.Name;
+      data.Description = product.Description;
+      data.Price = product.Price;
+      data.Specs = product.Specs;
+      title = 'Update Product: ' + product._id;
+      confirm = 'Update';
+    }
+    const dialogRef = this.dialog.open(EditDataDialogComponent, { width: '500px', data: {data: data, title: title, confirm: confirm}});
     dialogRef.afterClosed().subscribe(async (result: Product) => {
       if (result) {
-        this.productService.createProduct(result)
+
+        await callBack({...product, ...result});
       }
     })
   }

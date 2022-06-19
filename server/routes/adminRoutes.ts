@@ -16,5 +16,8 @@ export class AdminRoutes extends Routes{
     this.router.post("/create_product", this.productController.createProduct);
     this.router.post("/create_company", this.companyController.createCompany);
 
+    this.router.put("/update_product", this.productController.updateProduct);
+    this.router.put("/update_company", this.companyController.updateCompany);
+
   }
 }

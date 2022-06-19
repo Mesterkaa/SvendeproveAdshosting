@@ -15,7 +15,7 @@ export class CompaniesListComponent implements OnInit, OnDestroy {
 
   private readonly _destroying$ = new Subject<void>();
   public companies: Company[] = [];
-  public readonly displayedColumns: string[] = ['Id', 'Name', 'GroupId'];
+  public readonly displayedColumns: string[] = ['Id', 'Name', 'GroupId', 'GrafanaUrl', 'Edit'];
   constructor(private companyService: CompanyService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -31,10 +31,28 @@ export class CompaniesListComponent implements OnInit, OnDestroy {
   }
 
   createCompany(): void {
-    const dialogRef = this.dialog.open(EditDataDialogComponent, { width: '500px', data: {data: {Name: '', GroupId: ''}, labels: ['Company Name', 'Company GroupId'], title: 'Create Company'}});
+    this.openDialog(this.companyService.createCompany);
+  }
+
+  updateCompany(company: Company): void {
+    this.openDialog(this.companyService.updateCompany, company);
+  }
+
+  openDialog(callBack: (company: Company) => Promise<any>, company?: Company) {
+    let data = {Name: '', GroupId: '', GrafanaUrl: ''};
+    let title = 'Create Company';
+    let confirm = 'Create';
+    if (company) {
+      data.Name = company.Name;
+      data.GroupId = company.GroupId;
+      data.GrafanaUrl = company.GrafanaUrl
+      title = 'Update Company: ' + company._id;
+      confirm = 'Update';
+    }
+    const dialogRef = this.dialog.open(EditDataDialogComponent, { width: '500px', data: {data: data, title: title, confirm: confirm}});
     dialogRef.afterClosed().subscribe(async (result: Company) => {
       if (result) {
-        await this.companyService.createCompany(result);
+        await callBack({...company, ...result});
       }
     })
   }

@@ -5,8 +5,6 @@ export class ProductController{
     productService: ProductService = new ProductService();
 
     constructor() {
-      this.getProducts = this.getProducts.bind(this);
-      this.createProduct = this.createProduct.bind(this);
     }
 
     /**
@@ -15,7 +13,7 @@ export class ProductController{
      * @param res
      * @param next
      */
-    public async getProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public getProducts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const products = await this.productService.getProducts();
             res.send(products)
@@ -30,7 +28,7 @@ export class ProductController{
      * @param res
      * @param next
      */
-         public async createProduct({body: {Product}}: Request, res: Response, next: NextFunction): Promise<void> {
+         public createProduct = async ({body: {Product}}: Request, res: Response, next: NextFunction): Promise<void> => {
           try {
               const _product = await this.productService.createProduct(Product);
               res.send(_product)
@@ -38,4 +36,19 @@ export class ProductController{
               next(error);
           }
       }
+
+  /**
+   * Updates a product based on input
+   * @param req
+   * @param res
+   * @param next
+   */
+  public updateProduct = async ({body: {Product}}: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const _product = await this.productService.updateProduct(Product);
+        res.send(_product)
+    } catch (error) {
+        next(error);
+    }
+  }
 }

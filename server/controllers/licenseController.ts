@@ -6,11 +6,6 @@ export class LicenseController{
   licenseService: LicenseService = new LicenseService();
 
   constructor() {
-    this.createLicense = this.createLicense.bind(this);
-    this.getAllLicenses = this.getAllLicenses.bind(this);
-    this.getLicenses = this.getLicenses.bind(this);
-    this.getLicenseStatus = this.getLicenseStatus.bind(this);
-    this.getLicensesStatusByCompanyId = this.getLicensesStatusByCompanyId.bind(this);
   }
 
   /**
@@ -19,7 +14,7 @@ export class LicenseController{
      * @param res
      * @param next
      */
-  public async createLicense({user, body: {productId, stage, name}}: Request, res: Response, next: NextFunction): Promise<void> {
+  public createLicense = async ({user, body: {productId, stage, name}}: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const licenses = await this.licenseService.createLicense((user as ICompany), productId, stage, name);
         res.send(licenses)
@@ -34,7 +29,7 @@ export class LicenseController{
    * @param res
    * @param next
    */
-  public async getAllLicenses(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public getAllLicenses = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
       try {
           const licenses = await this.licenseService.getAllLicense();
           res.send(licenses)
@@ -49,7 +44,7 @@ export class LicenseController{
    * @param res
    * @param next
    */
-   public async getLicenses(req: Request, res: Response, next: NextFunction): Promise<void> {
+   public getLicenses = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const licenses = await this.licenseService.getLicensesByCompanyId((req.user as ICompany)._id);
       res.send(licenses)
@@ -64,7 +59,7 @@ export class LicenseController{
    * @param res
    * @param next
    */
-   public async getLicenseStatus({params: {Id}}: Request, res: Response, next: NextFunction): Promise<void> {
+   public getLicenseStatus = async ({params: {Id}}: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const status = await this.licenseService.getLicenseStatus(Id);
         res.send(status)
@@ -79,7 +74,7 @@ export class LicenseController{
    * @param res
    * @param next
    */
-     public async getLicensesStatusByCompanyId(req: Request, res: Response, next: NextFunction): Promise<void> {
+     public getLicensesStatusByCompanyId = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
       try {
           const status = await this.licenseService.getLicensesStatusByCompanyId((req.user as ICompany)._id);
           res.send(status)

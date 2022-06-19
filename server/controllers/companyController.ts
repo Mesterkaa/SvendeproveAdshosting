@@ -5,9 +5,6 @@ export class CompanyController{
   companyService: CompanyService = new CompanyService();
 
   constructor() {
-    this.getAllCompanies = this.getAllCompanies.bind(this);
-    this.getMyCompany = this.getMyCompany.bind(this);
-    this.createCompany = this.createCompany.bind(this);
   }
 
   /**
@@ -16,7 +13,7 @@ export class CompanyController{
    * @param res
    * @param next
    */
-  public async getAllCompanies(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public getAllCompanies = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const companies = await this.companyService.getAllCompanies();
       res.send(companies)
@@ -25,7 +22,7 @@ export class CompanyController{
     }
   }
 
-  public async getMyCompany(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public getMyCompany = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       res.send(req.user)
     } catch (error) {
@@ -39,7 +36,7 @@ export class CompanyController{
    * @param res
    * @param next
    */
-  public async createCompany({body: {Company}}: Request, res: Response, next: NextFunction): Promise<void> {
+  public createCompany = async ({body: {Company}}: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const _company = await this.companyService.createCompany(Company);
       res.send(_company)
@@ -47,4 +44,19 @@ export class CompanyController{
       next(error);
     }
   }
+
+     /**
+   * Updates a company based on input
+   * @param req
+   * @param res
+   * @param next
+   */
+      public updateCompany = async ({body: {Company}}: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+          const _company = await this.companyService.updateCompany(Company);
+          res.send(_company)
+        } catch (error) {
+          next(error);
+        }
+      }
 }

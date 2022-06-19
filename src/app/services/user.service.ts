@@ -12,7 +12,7 @@ export class UserService {
   constructor() {
    }
 
-   updateLogin(userInfo: UserInfo) {
+   updateLogin = (userInfo: UserInfo) => {
       this._user.next(userInfo)
    }
 }

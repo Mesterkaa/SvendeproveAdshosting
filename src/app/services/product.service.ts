@@ -8,13 +8,18 @@ import { Product } from '../models/product';
 })
 export class ProductService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getProducts(): Observable<Product[]> {
+  getProducts = (): Observable<Product[]> => {
     return this.http.get<Product[]>("/api/secure/get_products");
   }
 
-  createProduct(product: Product): Promise<Product> {
+  createProduct = (product: Product): Promise<Product> => {
     return this.http.post<Product>('/api/admin/create_product', {Product: product}).toPromise<Product>()
+  }
+
+  updateProduct = (product: Product): Promise<Product> => {
+    return this.http.put<Product>('/api/admin/update_product', {Product: product}).toPromise<Product>()
   }
 }

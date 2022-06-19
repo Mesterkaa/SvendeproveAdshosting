@@ -59,6 +59,10 @@ export class AccountComponent implements OnInit, OnDestroy {
       })
   }
 
+  goToGrafana(): void {
+    document.location.href = this.company.GrafanaUrl
+  }
+
   ngOnDestroy(): void {
     this._destroying$.next(undefined);
     this._destroying$.complete();
