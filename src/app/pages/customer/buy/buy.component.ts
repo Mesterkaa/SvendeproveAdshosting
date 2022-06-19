@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -54,7 +54,7 @@ export class BuyComponent implements OnInit, OnDestroy {
       const stage = this.formGroup.value.StageCtrl as string;
       const name = this.formGroup.value.NameCtrl as string
       this.licenseService.createLicense(id, stage, name).toPromise().then(e => {
-        this.snackBar.open('License created');
+        this.snackBar.open(`License, named '${e.Name}', was created and job started with Job id: ${e.JobId}`, 'OK', ({duration: 10000} as MatSnackBarConfig));
         this.router.navigateByUrl('/dashboard')
       });
     } else {

@@ -40,11 +40,11 @@
     </form>
   </mat-step>
 
-  <mat-step >
+  <mat-step>
     <ng-template matStepLabel>Confirm</ng-template>
     <div class="confirm">
-      <button mat-raised-button (click)="confirm()">Buy new license</button>
-      <button mat-raised-button (click)="reset()">Cancel</button>
+      <button mat-raised-button color="accent" (click)="confirm()">Buy new license</button>
+      <button mat-raised-button color="warn" (click)="reset()">Cancel</button>
     </div>
   </mat-step>
 

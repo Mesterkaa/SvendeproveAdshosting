@@ -25,4 +25,8 @@ export class LicenseService {
   getOwnLicensesStatus(): Observable<LicenseStatus[]> {
     return this.http.get<LicenseStatus[]>("/api/secure/get_licenses_status");
   }
+
+  deleteLicense(license: License): Observable<boolean> {
+    return this.http.put<boolean>("/api/secure/delete", {Id: license._id});
+  }
 }

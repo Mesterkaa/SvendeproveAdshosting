@@ -33,6 +33,7 @@ import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
 import { ApiInterceptor } from './interceptor/api.interceptor';
 import { environment } from 'src/environments/environment';
 import { EditDataDialogComponent } from './components/edit-data-dialog/edit-data-dialog.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -50,6 +51,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     BuyComponent,
     RepoComponent,
     EditDataDialogComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
