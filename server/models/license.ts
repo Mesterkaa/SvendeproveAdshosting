@@ -10,6 +10,9 @@ export interface ILicense extends Document {
   StartDate: Date;
   Name: string;
   JobId: string;
+  Cluster?: string;
+  Gitlab?: string;
+  GitUrl?: string;
 }
 
 export const licenseSchema: Schema = new Schema({
@@ -18,11 +21,14 @@ export const licenseSchema: Schema = new Schema({
   StartDate: {type: Date, required: true},
   Name: {type: String, required: true},
   JobId: {type: String, required: true},
+  Cluster: {type: String},
+  Gitlab: {type: String},
+  GitUrl: {type: String},
 });
 
 licenseSchema.pre<ILicense>("deleteOne", async function save(next) {
   const awxService: AwxService = new AwxService();
-  awxService.deleteJob(this.JobId);
+  await awxService.deleteJob(this);
   next();
 })
 

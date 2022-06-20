@@ -16,5 +16,6 @@ export class SecureRoutes extends Routes{
     this.router.get("/licenses_status", this.licenseController.getLicensesStatus)
     this.router.post("/create_license", this.licenseController.createLicense);
     this.router.put("/delete_license", this.licenseController.deleteLicense);
+    this.router.get("/git_access_token", this.licenseController.gitAccessToken);
   }
 }

@@ -6,6 +6,12 @@ export interface LicenseStatus {
   License: License,
   Status: any
 }
+
+export interface LicenseAccessToken {
+  License: License,
+  AccessToken: string
+}
+
 export interface License {
   _id?: string
   Product: Product;
@@ -13,6 +19,9 @@ export interface License {
   StartDate: Date;
   Name: string;
   JobId: string;
+  Cluster?: string;
+  Gitlab?: string;
+  GitUrl?: string;
 }
 
 export interface NewLicense {
@@ -22,4 +31,7 @@ export interface NewLicense {
   StartDate: Date;
   Name: string;
   JobId: string;
+  Cluster?: string;
+  Gitlab?: string;
+  GitUrl?: string;
 }

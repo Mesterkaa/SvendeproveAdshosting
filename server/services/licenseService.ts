@@ -1,14 +1,15 @@
-import { ITokenPayload } from "passport-azure-ad";
 import { ICompany } from "../models/company";
 import { ILicense, License } from "../models/license";
-import { CompanyService } from "../services/companyService";
-import { AwxService } from "../services/awxService";
+import { CompanyService } from "./companyService";
+import { AwxService } from "./awxService";
 import { IProduct, Product } from "../models/product";
 import mongoose from "mongoose";
+import { GitlabService } from "./gitlabService";
 
 export class LicenseService {
   companyService: CompanyService = new CompanyService();
   awxService: AwxService = new AwxService();
+  gitlabService: GitlabService = new GitlabService();
 
   /**
    * Creates a new license, by launching a new job and storing the JobId.
@@ -22,6 +23,17 @@ export class LicenseService {
     const product: IProduct | null = await Product.findById(productId);
     if (!product) return null
     const result = await this.awxService.launchJob(stage, product, company);
+    setTimeout(async () => {
+      const info = await this.awxService.getExtraIds(Number(result), 0);
+      const GitUrl = await this.gitlabService.getGitUrl(info.Gitlab);
+
+      const license = await License.findOne({JobId: result});
+      if (!license) throw new Error("New license has been removed");
+      license.Cluster = info.Cluster;
+      license.Gitlab = info.Gitlab;
+      license.GitUrl = GitUrl;
+      license.save();
+    }, 1000);
     return await (await License.create({Product: product._id, Company: company._id, JobId: result, Name: name, StartDate: new Date()})).populate(["Product", "Company"]);
   }
 

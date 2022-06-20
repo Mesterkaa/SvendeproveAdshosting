@@ -13,7 +13,7 @@ export class LicenseListComponent implements OnInit, OnDestroy {
 
   private readonly _destroying$ = new Subject<void>();
   public licenses: License[] = [];
-  public readonly displayedColumns: string[] = ['Id', 'Name', 'Product', 'Company', 'StartDate', 'JobId'];
+  public readonly displayedColumns: string[] = ['Id', 'Name', 'Product', 'Company', 'StartDate', 'JobId', 'Cluster', 'Gitlab'];
   constructor(private licenseService: LicenseService) { }
 
   ngOnInit(): void {
@@ -24,7 +24,6 @@ export class LicenseListComponent implements OnInit, OnDestroy {
       switchMap(() => this.licenseService.getAllLicenses())
     )
     .subscribe(e => {
-      console.log(e);
       this.licenses = e;
     })
   }

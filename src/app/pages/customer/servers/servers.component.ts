@@ -7,6 +7,7 @@ import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confi
 import { environment } from '../../../../environments/environment';
 import { License, LicenseStatus } from '../../../models/license';
 import { LicenseService } from '../../../services/license.service';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   templateUrl: './servers.component.html',
@@ -17,7 +18,7 @@ export class ServersComponent implements OnInit, OnDestroy {
   private readonly _destroying$ = new Subject<void>();
   public licenses: LicenseStatus[] = [];
   public readonly displayedColumns: string[] = ['Name', 'Product', 'StartDate', 'JobId', 'Status', 'Delete'];
-  constructor(private licenseService: LicenseService, public dialog: MatDialog) { }
+  constructor(private licenseService: LicenseService, public dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     interval(environment.updateFreq)
@@ -46,9 +47,8 @@ export class ServersComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(async (result: boolean) => {
       if (result) {
         this.licenseService.deleteLicense(licenseStatus.License).subscribe(e => {
-          console.log(e);
+          this.snackBar.open(e ? "Success" : "An Error has happend", 'OK', ({duration: 10000} as MatSnackBarConfig));
         });
-        console.warn("NOT IMPLEMENTED")
       }
     })
   }

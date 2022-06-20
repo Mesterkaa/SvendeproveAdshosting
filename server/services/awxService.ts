@@ -6,7 +6,7 @@ import axios, { AxiosError } from 'axios';
 import * as https from 'https';
 
 export class AwxService {
-  axiosInstance = axios.create({
+  private axiosInstance = axios.create({
     httpsAgent: new https.Agent({
       rejectUnauthorized: false
     })
@@ -30,7 +30,7 @@ export class AwxService {
       'vm_datacenter': 'ADShosting Datacenter'
       }},
       {headers: { 'Authorization': `Bearer ${awx_token}`}})
-    .then(res => {
+    .then(async res => {
       return (res.data.id as string);
     })
     .catch((error: any) => {
@@ -46,25 +46,24 @@ export class AwxService {
     return await this.axiosInstance
     .get(`${api_urls.awx}/workflow_jobs/${jobId}/`, {headers: { 'Authorization': `Bearer ${awx_token}`}})
     .then(res => {
-      return res.data["status"];
+      return res.data['status'];
     })
     .catch(error => {
       throw error;
-    })
+    });
   }
 
   /**
    * Delete job
    * @param jobId Id of the wanted job
    */
-   public async deleteJob(jobId: string): Promise<any> {
-    const cluster = "";
-    const gitlabproject = "";
+   public async deleteJob(license: ILicense): Promise<any> {
+    // What if cluster and gitlab is undefined
     return await this.axiosInstance
     .post(`${api_urls.awx}/workflow_job_templates/17/launch/`,
       { 'extra_vars': {
-        'cluster': cluster,
-        'gitlabproject': gitlabproject
+        'cluster': license.Cluster,
+        'gitlabproject': license.Gitlab
       }},
       {headers: { 'Authorization': `Bearer ${awx_token}`}})
     .then(res => {
@@ -75,16 +74,25 @@ export class AwxService {
     })
   }
 
-  public async clusterId(jobId: string): Promise<string> {
-    const intJobId = Number(jobId);
-    if (intJobId == NaN) throw new Error("jobId is not a number");
+  public async getExtraIds(jobId: number, iteration: number): Promise<{Cluster: string, Gitlab: string}> {
     return await this.axiosInstance
-      .get(`${api_urls.awx}/jobs/${intJobId + 1}`, {headers: { 'Authorization': `Bearer ${awx_token}`}})
-      .then(res => {
-        return res.data["clusterfacts"]["id"];
+      .get(`${api_urls.awx}/jobs/${jobId + 1}`, {headers: { 'Authorization': `Bearer ${awx_token}`}})
+      .then(async res => {
+
+        const cluster = res.data['artifacts']['clusterfacts']['id'];
+        const gitlab = res.data['artifacts']['gitlab']['gitlabproject'];
+
+        const info = { Cluster: cluster, Gitlab: gitlab };
+        return info;
       })
-      .catch((error: any) => {
-        throw error;
+      .catch(async (error: any) => {
+        if (iteration < 500) {
+          return await new Promise(resolve => setTimeout(async () => {
+            resolve(await this.getExtraIds(jobId, iteration + 1));
+          }, 2000))
+        } else {
+          throw error;
+        }
       })
   }
 

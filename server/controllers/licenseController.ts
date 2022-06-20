@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { ICompany } from "server/models/company";
 import { LicenseService } from "../services/licenseService";
+import { GitlabService } from "../services/gitlabService";
 
 export class LicenseController{
   licenseService: LicenseService = new LicenseService();
+  gitlabService: GitlabService = new GitlabService();
 
   constructor() {
   }
@@ -82,4 +84,19 @@ export class LicenseController{
         next(error);
     }
   }
+
+    /**
+ * Gets a access token for Git repo from a license
+ * @param req
+ * @param res
+ * @param next
+ */
+     public gitAccessToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+      try {
+          const token = await this.gitlabService.getAccessToken(req.query.gitlab as string);
+          res.send({token: token})
+      } catch (error) {
+          next(error);
+      }
+    }
 }
