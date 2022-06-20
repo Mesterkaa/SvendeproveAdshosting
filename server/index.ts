@@ -106,7 +106,7 @@ class Server {
   public start(): void {
       const httpServer = http.createServer(this.app);
 
-      httpServer.listen(port, 'localhost', () => {
+      httpServer.listen(port, () => {
           logger.log('info', 'HTTP Server running on port localhost:' + port);
 
       });

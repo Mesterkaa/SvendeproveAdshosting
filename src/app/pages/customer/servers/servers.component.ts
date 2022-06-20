@@ -61,6 +61,8 @@ export class ServersComponent implements OnInit, OnDestroy {
     switch (status) {
       case "running":
         return "running";
+      case "pending":
+        return "pending";
       case "successful":
         return "success";
       default:

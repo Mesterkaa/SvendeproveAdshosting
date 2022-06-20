@@ -20,6 +20,12 @@ table {
 	        animation: scale-up-center 2s ease-in-out infinite ;
 }
 
+.pending {
+  background-color: #eb6200;
+  -webkit-animation: scale-up-center 2s ease-in-out infinite ;
+	        animation: scale-up-center 2s ease-in-out infinite ;
+}
+
 .failed {
   background-color: #da1e28;
 }
