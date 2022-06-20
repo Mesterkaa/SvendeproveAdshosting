@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CompaniesListComponent } from './pages/admin/companies-list/companies-list.component';
 import { LicenseListComponent } from './pages/admin/license-list/license-list.component';
 import { ProductsListComponent } from './pages/admin/products-list/products-list.component';
-import { UsageComponent } from './pages/admin/usage/usage.component';
 import { AccountComponent } from './pages/customer/account/account.component';
 import { BuyComponent } from './pages/customer/buy/buy.component';
 import { RepoComponent } from './pages/customer/repo/repo.component';
@@ -45,8 +44,8 @@ const routes: Routes = [
     canActivate: [MsalGuard, AdminGuard],
     children: [
       {
-        path: '',
-        component: UsageComponent,
+        path: 'licenses',
+        component: LicenseListComponent
       },
       {
         path: 'companies',
@@ -55,11 +54,8 @@ const routes: Routes = [
       {
         path: 'products',
         component: ProductsListComponent
-      },
-      {
-        path: 'licenses',
-        component: LicenseListComponent
       }
+
     ]
   }
 

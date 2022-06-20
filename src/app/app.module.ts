@@ -21,7 +21,6 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
-import { UsageComponent } from './pages/admin/usage/usage.component';
 import { CompaniesListComponent } from './pages/admin/companies-list/companies-list.component';
 import { ProductsListComponent } from './pages/admin/products-list/products-list.component';
 import { LicenseListComponent } from './pages/admin/license-list/license-list.component';
@@ -44,7 +43,6 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
   declarations: [
     AppComponent,
     WelcomeComponent,
-    UsageComponent,
     CompaniesListComponent,
     ProductsListComponent,
     LicenseListComponent,

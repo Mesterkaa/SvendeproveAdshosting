@@ -9,7 +9,6 @@
     <a mat-button [routerLink]="['dashboard/account']">Account</a>
   </div>
   <div *ngIf="user.type == 'admin'">
-    <a mat-button [routerLink]="['admin']">Usage</a>
     <a mat-button [routerLink]="['admin/companies']">Companies</a>
     <a mat-button [routerLink]="['admin/products']">Products</a>
     <a mat-button [routerLink]="['admin/licenses']">Licenses</a>
