@@ -6,7 +6,7 @@ import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../models/product';
 import { MatDialog } from '@angular/material/dialog';
 import { EditDataDialogComponent } from '../../../components/edit-data-dialog/edit-data-dialog.component';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   templateUrl: './products-list.component.html',

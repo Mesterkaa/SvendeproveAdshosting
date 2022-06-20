@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { StringSchemaDefinition } from 'mongoose';
 import { interval, Subject } from 'rxjs';
 import { takeUntil, startWith, switchMap } from 'rxjs/operators';
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { License, LicenseStatus } from '../../../models/license';
 import { LicenseService } from '../../../services/license.service';
@@ -27,7 +27,10 @@ export class ServersComponent implements OnInit, OnDestroy {
       switchMap(() => this.licenseService.getOwnLicensesStatus())
     )
     .subscribe(e => {
-      this.licenses = e.sort((a, b) => new Date(b.License.StartDate).getTime() - new Date(a.License.StartDate).getTime());
+      const newData = e.sort((a, b) => new Date(b.License.StartDate).getTime() - new Date(a.License.StartDate).getTime());
+      if (JSON.stringify(newData) != JSON.stringify(this.licenses)) {
+        this.licenses = newData;
+      }
     })
   }
 

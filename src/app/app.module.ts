@@ -31,7 +31,7 @@ import { RepoComponent } from './pages/customer/repo/repo.component';
 import { MsalModule, MsalGuard, MsalInterceptor } from '@azure/msal-angular'; // Import MsalInterceptor
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
 import { ApiInterceptor } from './interceptor/api.interceptor';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 import { EditDataDialogComponent } from './components/edit-data-dialog/edit-data-dialog.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
