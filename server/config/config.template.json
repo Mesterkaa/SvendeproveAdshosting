@@ -22,5 +22,9 @@
   },
   "port": 8080,
   "mongodb_uri": "",
-  "awx_token": ""
+  "awx_token": "",
+  "api_urls": {
+    "awx": "",
+    "gitlab": ""
+  }
 }
