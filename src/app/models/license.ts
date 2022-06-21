@@ -7,10 +7,6 @@ export interface LicenseStatus {
   Status: any
 }
 
-export interface LicenseAccessToken {
-  License: License,
-  AccessToken: string
-}
 interface BaseLicense {
   _id?: string
   StartDate: Date;

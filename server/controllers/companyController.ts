@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { CompanyService } from "../services/companyService";
 
 export class CompanyController{
-  companyService: CompanyService = new CompanyService();
+  private companyService: CompanyService = new CompanyService();
 
   constructor() {
   }
@@ -22,7 +22,7 @@ export class CompanyController{
     }
   }
 
-    /**
+  /**
    * Get company associated to the user based on input
    * @param req
    * @param res
@@ -36,7 +36,7 @@ export class CompanyController{
     }
 }
 
-    /**
+  /**
    * Creates a company based on input
    * @param req
    * @param res
@@ -51,18 +51,18 @@ export class CompanyController{
     }
   }
 
-     /**
-   * Updates a company based on input
-   * @param req
-   * @param res
-   * @param next
-   */
-      public updateCompany = async ({body: {Company}}: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-          const _company = await this.companyService.updateCompany(Company);
-          res.send(_company)
-        } catch (error) {
-          next(error);
-        }
-      }
+  /**
+ * Updates a company based on input
+ * @param req
+ * @param res
+ * @param next
+ */
+  public updateCompany = async ({body: {Company}}: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const _company = await this.companyService.updateCompany(Company);
+      res.send(_company)
+    } catch (error) {
+      next(error);
+    }
+  }
 }

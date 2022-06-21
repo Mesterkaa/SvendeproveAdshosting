@@ -7,9 +7,9 @@ import mongoose from "mongoose";
 import { GitlabService } from "./gitlabService";
 
 export class LicenseService {
-  companyService: CompanyService = new CompanyService();
-  awxService: AwxService = new AwxService();
-  gitlabService: GitlabService = new GitlabService();
+  private companyService: CompanyService = new CompanyService();
+  private awxService: AwxService = new AwxService();
+  private gitlabService: GitlabService = new GitlabService();
 
   /**
    * Creates a new license, by launching a new job and storing the JobId.
@@ -88,7 +88,9 @@ export class LicenseService {
    async deleteLicense(companyId: mongoose.Types.ObjectId, license_id: string): Promise<boolean> {
     const license = await License.findById(license_id).populate(['Company']);
     if (license == null || !companyId.equals(license.Company['_id'])) return false;
-    //license.delete();
+    await this.awxService.deleteJob(license);
+    license.delete();
+
     return true;
   }
 }

@@ -55,12 +55,12 @@ export class AwxService {
 
   /**
    * Delete job
-   * @param jobId Id of the wanted job
+   * @param license Job owner License
    */
-   public async deleteJob(license: ILicense): Promise<any> {
+   public async deleteJob(license: ILicense): Promise<string> {
     // What if cluster and gitlab is undefined
     return await this.axiosInstance
-    .post(`${api_urls.awx}/workflow_job_templates/17/launch/`,
+    .post(`${api_urls.awx}/workflow_job_templates/21/launch/`,
       { 'extra_vars': {
         'cluster': license.Cluster,
         'gitlabproject': license.Gitlab
@@ -74,7 +74,12 @@ export class AwxService {
     })
   }
 
-  public async getExtraIds(jobId: number, iteration: number): Promise<{Cluster: string, ClusterUrl: string, Gitlab: string}> {
+  /**
+   * Gets extra ids and info
+   * @param jobId Number of the current job
+   * @param iteration Recursive number that controls it doesn't go on forever
+   */
+  public async getExtraIds(jobId: number, iteration: number = 0): Promise<{Cluster: string, ClusterUrl: string, Gitlab: string}> {
     return await this.axiosInstance
       .get(`${api_urls.awx}/jobs/${jobId + 1}`, {headers: { 'Authorization': `Bearer ${awx_token}`}})
       .then(async res => {

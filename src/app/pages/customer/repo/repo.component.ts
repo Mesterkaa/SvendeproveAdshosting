@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subject } from 'rxjs';
 import { takeUntil, startWith, switchMap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
-import { License, LicenseAccessToken } from '../../../models/license';
+import { License } from '../../../models/license';
 import { LicenseService } from '../../../services/license.service';
 
 @Component({
@@ -13,7 +13,8 @@ import { LicenseService } from '../../../services/license.service';
 export class RepoComponent implements OnInit {
 
   private readonly _destroying$ = new Subject<void>();
-  public licenses: LicenseAccessToken[] = [];
+  public licenses: License[] = [];
+  public accessTokens: {[key: string]: string;} = {};
   public readonly displayedColumns: string[] = ['Name', 'GitUrl', 'Generate', 'AccessToken'];
   constructor(private licenseService: LicenseService, private clipboard: Clipboard) { }
 
@@ -25,13 +26,13 @@ export class RepoComponent implements OnInit {
       switchMap(() => this.licenseService.getOwnLicenses())
     )
     .subscribe(e => {
-      this.licenses = e.map(e => { return {License: e, AccessToken: ''}});
+      this.licenses = e
     })
   }
 
-  accessToken(element: LicenseAccessToken): void {
-    this.licenseService.getGitAccessToken(element.License.Gitlab as string).subscribe(e => {
-      element.AccessToken = e.token;
+  accessToken(element: License): void {
+    this.licenseService.getGitAccessToken(element.Gitlab as string).subscribe(e => {
+      if (element._id) this.accessTokens[element._id] = e.token;
     })
   }
 

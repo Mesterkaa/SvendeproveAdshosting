@@ -1,7 +1,6 @@
-import { Document, Schema, Model, model, Error } from "mongoose";
+import { Document, Schema, Model, model} from "mongoose";
 import { IProduct } from "./product";
 import { ICompany } from "./company";
-import { AwxService } from "../services/awxService";
 
 
 export interface ILicense extends Document {
@@ -27,11 +26,5 @@ export const licenseSchema: Schema = new Schema({
   Gitlab: {type: String},
   GitUrl: {type: String},
 });
-
-licenseSchema.pre<ILicense>("deleteOne", async function save(next) {
-  const awxService: AwxService = new AwxService();
-  await awxService.deleteJob(this);
-  next();
-})
 
 export const License: Model<ILicense> = model<ILicense>("License", licenseSchema);

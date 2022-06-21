@@ -20,14 +20,6 @@ export class CompanyService {
     return await Company.findOne({GroupId: { $in: Groups }})
   }
 
-    /**
-   * Get Company by id stored in the database.
-   * @returns A single document containing the Company.
-   */
-     async getCompanyById(Id: string): Promise<ICompany | null> {
-      return await Company.findById(Id);
-    }
-
   /**
    * Creates a Company.
    * @returns A single document containing the created Company.

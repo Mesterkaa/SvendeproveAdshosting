@@ -4,8 +4,8 @@ import { LicenseService } from "../services/licenseService";
 import { GitlabService } from "../services/gitlabService";
 
 export class LicenseController{
-  licenseService: LicenseService = new LicenseService();
-  gitlabService: GitlabService = new GitlabService();
+  private licenseService: LicenseService = new LicenseService();
+  private gitlabService: GitlabService = new GitlabService();
 
   constructor() {
   }

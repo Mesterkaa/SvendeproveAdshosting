@@ -2,24 +2,24 @@
 
   <ng-container matColumnDef="Name">
     <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.License.Name}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
   </ng-container>
 
   <ng-container matColumnDef="GitUrl">
     <th mat-header-cell *matHeaderCellDef> Git URL </th>
-    <td mat-cell *matCellDef="let element"> {{element.License.GitUrl}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.GitUrl}} </td>
   </ng-container>
 
   <ng-container matColumnDef="Generate">
     <th mat-header-cell *matHeaderCellDef> Generate Access Token </th>
-    <td mat-cell *matCellDef="let element"> <button mat-raised-button *ngIf="element.License.Gitlab" color="primary" (click)="accessToken(element)">Generate Token</button><p *ngIf="!element.License.Gitlab">Please wait</p></td>
+    <td mat-cell *matCellDef="let element"> <button mat-raised-button *ngIf="element.Gitlab" color="primary" (click)="accessToken(element)">Generate Token</button><p *ngIf="!element.Gitlab">Please wait</p></td>
   </ng-container>
 
   <ng-container matColumnDef="AccessToken">
     <th mat-header-cell *matHeaderCellDef> Token </th>
     <td mat-cell *matCellDef="let element">
-      {{element.AccessToken}}
-      <button *ngIf="element.AccessToken != ''" mat-icon-button aria-label="Copy Token" (click)="copy(element.AccessToken)">
+      {{accessTokens[element._id]}}
+      <button *ngIf="accessTokens[element._id] != ''" mat-icon-button aria-label="Copy Token" (click)="copy(accessTokens[element._id])">
         <mat-icon>content_copy</mat-icon>
       </button>
     </td>
