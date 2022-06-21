@@ -31,7 +31,8 @@ export class LicenseService {
       if (!license) throw new Error("New license has been removed");
       license.Cluster = info.Cluster;
       license.Gitlab = info.Gitlab;
-      license.GitUrl = GitUrl;
+      license.ClusterUrl = info.ClusterUrl;
+      license.GitUrl = GitUrl.replace(".lan", ".dk");
       license.save();
     }, 1000);
     return await (await License.create({Product: product._id, Company: company._id, JobId: result, Name: name, StartDate: new Date()})).populate(["Product", "Company"]);

@@ -74,15 +74,16 @@ export class AwxService {
     })
   }
 
-  public async getExtraIds(jobId: number, iteration: number): Promise<{Cluster: string, Gitlab: string}> {
+  public async getExtraIds(jobId: number, iteration: number): Promise<{Cluster: string, ClusterUrl: string, Gitlab: string}> {
     return await this.axiosInstance
       .get(`${api_urls.awx}/jobs/${jobId + 1}`, {headers: { 'Authorization': `Bearer ${awx_token}`}})
       .then(async res => {
 
         const cluster = res.data['artifacts']['clusterfacts']['id'];
         const gitlab = res.data['artifacts']['gitlab']['gitlabproject'];
+        const clusterUrl = res.data['artifacts']['dnsrecord'];
 
-        const info = { Cluster: cluster, Gitlab: gitlab };
+        const info = { Cluster: cluster, ClusterUrl: clusterUrl, Gitlab: gitlab };
         return info;
       })
       .catch(async (error: any) => {

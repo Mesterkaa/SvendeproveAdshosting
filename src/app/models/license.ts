@@ -11,27 +11,22 @@ export interface LicenseAccessToken {
   License: License,
   AccessToken: string
 }
-
-export interface License {
+interface BaseLicense {
   _id?: string
-  Product: Product;
-  Company: Company;
   StartDate: Date;
   Name: string;
   JobId: string;
   Cluster?: string;
+  ClusterUrl?: string
   Gitlab?: string;
   GitUrl?: string;
 }
 
-export interface NewLicense {
-  _id?: string
+export interface License extends BaseLicense {
+  Product: Product;
+  Company: Company;
+}
+export interface NewLicense extends BaseLicense {
   Product: Product['_id'];
   Company: Company['_id'];
-  StartDate: Date;
-  Name: string;
-  JobId: string;
-  Cluster?: string;
-  Gitlab?: string;
-  GitUrl?: string;
 }

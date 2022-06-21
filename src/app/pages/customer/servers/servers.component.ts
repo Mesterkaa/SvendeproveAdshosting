@@ -17,7 +17,7 @@ export class ServersComponent implements OnInit, OnDestroy {
 
   private readonly _destroying$ = new Subject<void>();
   public licenses: LicenseStatus[] = [];
-  public readonly displayedColumns: string[] = ['Name', 'Product', 'StartDate', 'JobId', 'Status', 'Delete'];
+  public readonly displayedColumns: string[] = ['Name', 'Product', 'StartDate', 'JobId', 'Status', 'Url', 'Delete'];
   constructor(private licenseService: LicenseService, public dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {

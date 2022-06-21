@@ -11,6 +11,7 @@ export interface ILicense extends Document {
   Name: string;
   JobId: string;
   Cluster?: string;
+  ClusterUrl?: string;
   Gitlab?: string;
   GitUrl?: string;
 }
@@ -22,6 +23,7 @@ export const licenseSchema: Schema = new Schema({
   Name: {type: String, required: true},
   JobId: {type: String, required: true},
   Cluster: {type: String},
+  ClusterUrl: {type: String},
   Gitlab: {type: String},
   GitUrl: {type: String},
 });
