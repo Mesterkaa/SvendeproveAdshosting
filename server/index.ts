@@ -60,7 +60,6 @@ class Server {
       const groups = token.groups;
       if (groups == undefined || !Array.isArray(groups) ||groups.length == 0) return done(null, {}, false);
       const matchingGroups = groups.filter(x => azure.adminGroups.includes(x));
-      console.log("matchingGroups", matchingGroups)
       if (matchingGroups.length == 0) return done(null, {}, false)
       const company = await this.companyService.getCompanyByGroupId(token.groups);
       done(null, company, token);

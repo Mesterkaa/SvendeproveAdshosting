@@ -12,21 +12,4 @@ export class WelcomeComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
-  open() {
-    this.http.get("/api/public").subscribe(e => {
-      console.log(e);
-    })
-  }
-  secure() {
-    this.http.get("/api/secure").subscribe(e => {
-      console.log(e);
-    })
-  }
-  admin() {
-    this.http.get("/api/admin").subscribe(e => {
-      console.log(e);
-    })
-  }
-
 }
