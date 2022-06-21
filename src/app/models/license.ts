@@ -3,12 +3,12 @@ import { Product } from "./product";
 
 
 export interface LicenseStatus {
-  License: License,
+  License: License
   Status: any
 }
 
 interface BaseLicense {
-  _id?: string
+  _id?: string;
   StartDate: Date;
   Name: string;
   JobId: string;
