@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this._router.navigateByUrl("/");
     this.authService.logoutPopup({
       mainWindowRedirectUri: "/"
-    }).toPromise().then( () => {
+    }).subscribe(() => {
       this.setLoginDisplay();
     });
   }

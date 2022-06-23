@@ -22,8 +22,8 @@ type ProfileType = {
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit, OnDestroy {
-  profile!: ProfileType;
-  company: Company
+  public profile!: ProfileType;
+  public company: Company
   private readonly _destroying$ = new Subject<void>();
   public licenses: License[] = []
   public readonly displayedColumns: string[] = ['Name', 'Product', 'StartDate'];

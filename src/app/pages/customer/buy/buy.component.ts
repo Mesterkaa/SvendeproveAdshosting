@@ -15,15 +15,15 @@ import { ProductService } from '../../../services/product.service';
 })
 export class BuyComponent implements OnInit, OnDestroy {
 
-  constructor(private licenseService: LicenseService, private productService: ProductService, private _formBuilder: FormBuilder, private snackBar: MatSnackBar, private router: Router) { }
-  public products: Product[] = [];
   private readonly _destroying$ = new Subject<void>();
-  selectedProduct: Product | null = null;
+  public products: Product[] = [];
+  public selectedProduct: Product | null = null;
   @ViewChild('stepper') private myStepper: MatStepper;
-  formGroup = this._formBuilder.group({
+  public formGroup = this._formBuilder.group({
     NameCtrl: ['', Validators.required],
     StageCtrl: ['', Validators.required],
   });
+  constructor(private licenseService: LicenseService, private productService: ProductService, private _formBuilder: FormBuilder, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
     this.productService.getProducts()
